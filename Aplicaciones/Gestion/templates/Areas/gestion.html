@@ -1,0 +1,109 @@
+{% extends "plantilla.html" %}
+{% load static %}
+{% block body %}
+<div class="container">
+    <h1 class="text-center">Gestión de Áreas</h1>
+    <div class="row">
+        <div class="col-md-12 text-end">
+            <button class="btn btn-success" onclick="cargarareas();"><i class="fas fa-refresh"></i> Actualizar</button>
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                <i class="fas fa-pencil fa-lg"></i> <b>Guardar Área</b>
+            </button>
+        </div>
+    </div>
+</div>
+<br>
+<div class="col-md-12" id="contenedor-areas"></div>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Nueva Área</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="#" id="frm_nuevo_area">
+                    {% csrf_token %}
+                    <label for="codigo"><b>Código:</b></label>
+                    <input type="text" id="codigo" name="codigo" class="form-control" placeholder="Ingresar código del área"><br>
+                    <label for="nombre"><b>Nombre:</b></label>
+                    <input type="text" id="nombre" name="nombre" class="form-control" placeholder="Ingresar nombre del área"><br>
+                    <label for="descripcion"><b>Descripción:</b></label>
+                    <input type="text" id="descripcion" name="descripcion" class="form-control" placeholder="Ingresar descripción del área"><br>
+                    <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Guardar</button>
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal"><i class="fas fa-times"></i> Cancelar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<br><br><br>
+<script>
+    $("#frm_nuevo_area").validate({
+        rules:{
+            codigo:{
+                required: true
+            },
+            nombre:{
+                required: true
+            },
+            descripcion:{
+                required: true
+            }
+        },
+        messages:{
+            codigo:{
+                required: "Ingrese código para identificar el área",
+            },
+            nombre:{
+                required: "Ingrese nombre del área"
+            },
+            descripcion:{
+                required: "Ingrese descripción"
+            }
+        },
+        submitHandler:function(formulario){
+            const formData = new FormData(formulario);
+            fetch("{% url 'guardarArea' %}", {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if(data.estado){
+                    Swal.fire({
+                        title: "Confirmación",
+                        text: data.mensaje,
+                        icon: 'success'
+                    });
+                    $("#exampleModal").modal('hide'); // cierra el modal
+                    formulario.reset(); // resetea los campos del modal
+                    cargarareas();
+                } else {
+                    alert("Error: " + data.mensaje);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+    });
+
+    function cargarareas(){
+        $("#contenedor-areas").load('{% url "listadoAreas" %}', function(response, status, xhr) {
+            if (status === "error") {
+                console.error("Error al cargar áreas: " + xhr.status + " " + xhr.statusText);
+            } else {
+                console.log("Áreas cargadas correctamente.");
+            }
+        });
+    }
+
+    cargarareas();
+</script>
+{% endblock %}

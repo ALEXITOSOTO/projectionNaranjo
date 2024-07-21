@@ -1,9 +1,29 @@
-{% extends "plantilla.html" %}
-{% block body %}
-<div class="card">
-    <div class="card-tittle text-center">
-        <h3><b>Nuestras Áreas</b></h3>
-    </div>
-    
-</div>
-{% endblock %}
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Código</th>
+            <th>Nombre</th>
+            <th>Descripción</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for area in areas %}
+        <tr>
+            <td>{{ area.codigo }}</td>
+            <td>{{ area.nombre }}</td>
+            <td>{{ area.descripcion }}</td>
+            <td class="text-center">
+                <a href="" class="btn btn-outline-warning btn-circle"
+                title="Editar Cine">
+                    <i class="fas fa-pencil">Editar</i>
+                </a>
+                <a href="" onclick="return confirm('¿Estás seguro?');" class="btn btn-outline-danger btn-circle">
+                    <i class="fas fa-trash"> Eliminar</i>
+                </a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
