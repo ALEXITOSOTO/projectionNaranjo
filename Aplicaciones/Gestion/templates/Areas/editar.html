@@ -1,0 +1,25 @@
+{% extends "plantilla.html" %} <!--Heredar lo de platilla.html-->
+{% block body %}
+<h1>Editar area</h1>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <form action="{% url 'procesarActualizacionArea' %}" method="post">
+                {% csrf_token %}
+                <input type="hidden" name="id" value="{{areaEditar.id}}">
+                <label for=""><b>Codigo:</b></label>
+                <input type="text" name="codigo" class="form-control" value="{{areaEditar.codigo}}" id="codigo" placeholder="Ingrese el codigo del area">
+                <label for=""><b>Nombre:</b></label>
+                <input type="text" name="nombre" class="form-control" value="{{areaEditar.nombre}}" id="nombre" placeholder="Ingrese el nombre del area">
+                <label for=""><b>Descripción:</b></label>
+                <textarea name="descripcion" id="descripcion" class="form-control" rows="3" placeholder="Ingrese la descripcion">{{areaEditar.descripcion}}</textarea>
+                <br>
+                <button  type="submit" class="btn btn-warning">Actualizar</button>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <a href="{% url 'gestionAreas' %}">Cancelar</a>
+            </form>
+        </div>
+    </div>
+</div>
+<br>
+{% endblock %}

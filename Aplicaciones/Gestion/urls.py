@@ -6,5 +6,8 @@ urlpatterns = [
     path('',views.home, name='home'),
     path('Areas/listado.html/', views.listadoAreas, name='listadoAreas'),
     path('Areas/gestion.html/', views.gestionAreas, name='gestionAreas'),
-    path('guardarArea/', views.guardarArea, name='guardarArea')
+    path('guardarArea/', views.guardarArea, name='guardarArea'),
+    path('procesarActualizacionArea/', views.procesarActualizacionArea, name='procesarActualizacionArea'),
+    path('eliminarArea/<id>/', views.eliminarArea, name='eliminarArea'),
+    path('editarArea/<id>/', views.editarArea, name='editarArea'),
 ]

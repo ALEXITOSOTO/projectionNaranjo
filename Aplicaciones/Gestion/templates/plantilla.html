@@ -57,7 +57,7 @@
                             </a>
                             <ul class="submenu ">
                                 <li class="submenu-item ">
-                                    <a href="{% url 'listadoAreas' %}">Áreas</a>
+                                    <a href="{% url 'gestionAreas' %}">Áreas</a>
                                 </li>
                                 <li class="submenu-item ">
                                     <a href="component-badge.html">Bloques</a>
@@ -408,4 +408,28 @@
     </div>
 
 </body>
+{% if messages %}
+        {% for mensaje in messages %}
+            {% if mensaje.tags == 'success' %}
+                <script>
+                    Swal.fire({
+                    title: "CONFIRMACION",
+                    text: "{{mensaje}}",
+                    icon: "success"
+                    });
+                </script>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+
+    <style>
+        /* Letras de Color rojo */
+        label.error{
+            color: red;
+        }
+        /* Borde rojo */
+        .form-control.error{
+            border: 1px solid red;
+        }
+    </style>
 </html>

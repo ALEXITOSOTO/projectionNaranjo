@@ -41,60 +41,77 @@
 </div>
 <br><br><br>
 <script>
+    // Inicializa la validación del formulario con jQuery Validate
     $("#frm_nuevo_area").validate({
-        rules:{
-            codigo:{
+        rules: {
+            codigo: {
                 required: true
             },
-            nombre:{
+            nombre: {
                 required: true
             },
-            descripcion:{
+            descripcion: {
                 required: true
             }
         },
-        messages:{
-            codigo:{
+        messages: {
+            codigo: {
                 required: "Ingrese código para identificar el área",
             },
-            nombre:{
+            nombre: {
                 required: "Ingrese nombre del área"
             },
-            descripcion:{
+            descripcion: {
                 required: "Ingrese descripción"
             }
         },
-        submitHandler:function(formulario){
+        submitHandler: function(formulario) {
+            // Crear un objeto FormData con los datos del formulario
             const formData = new FormData(formulario);
-            fetch("{% url 'guardarArea' %}", {
-                method: 'POST',
-                body: formData,
-                headers: {
-                    'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
-                }
-            })
-            .then(response => response.json())
-            .then(data => {
-                if(data.estado){
+            
+            $.ajax({
+                url: "{% url 'guardarArea' %}", // Cambia esto al nombre de la vista en Django que maneja la solicitud POST
+                type: "POST",
+                data: formData,
+                processData: false, // Impide que jQuery procese los datos
+                contentType: false, // Impide que jQuery establezca el tipo de contenido
+                success: function(response) {
+                    // Manejar la respuesta del servidor
+                    if (response.estado) {
+                        Swal.fire({
+                            title: "Confirmación",
+                            text: response.mensaje,
+                            icon: 'success'
+                        }).then(() => {
+                            // Recargar la página
+                            location.reload();
+                        });
+                        
+                        $('#exampleModal').modal('hide'); // Oculta el modal después de guardar
+                        formulario.reset(); // Resetea los campos del formulario
+                        cargarareas(); // Opcionalmente, puedes recargar la lista de áreas aquí si es necesario
+                        
+                    } else {
+                        Swal.fire({
+                            title: "Error",
+                            text: response.mensaje,
+                            icon: 'error'
+                        });
+                    }
+                },
+                error: function(xhr, status, error) {
+                    // Manejar errores
                     Swal.fire({
-                        title: "Confirmación",
-                        text: data.mensaje,
-                        icon: 'success'
+                        title: "Error",
+                        text: "Hubo un error al guardar el área",
+                        icon: 'error'
                     });
-                    $("#exampleModal").modal('hide'); // cierra el modal
-                    formulario.reset(); // resetea los campos del modal
-                    cargarareas();
-                } else {
-                    alert("Error: " + data.mensaje);
                 }
-            })
-            .catch(error => {
-                console.error('Error:', error);
             });
         }
     });
 
-    function cargarareas(){
+    function cargarareas() {
         $("#contenedor-areas").load('{% url "listadoAreas" %}', function(response, status, xhr) {
             if (status === "error") {
                 console.error("Error al cargar áreas: " + xhr.status + " " + xhr.statusText);
@@ -104,6 +121,8 @@
         });
     }
 
+    // Llama a la función para cargar áreas al cargar la página
     cargarareas();
 </script>
+
 {% endblock %}
