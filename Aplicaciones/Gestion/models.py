@@ -10,3 +10,22 @@ class Area(models.Model):
     def __str__(self):
         fila='{0} - {1} - {2}'
         return fila.format(self.id,self.codigo,self.descripcion)
+
+class Responsable(models.Model):
+    ESTADO_CHOICES = [
+        ('A', 'Activo'),
+        ('I', 'Inactivo'),
+    ]
+    
+    id = models.AutoField(primary_key=True)
+    nombre = models.CharField(max_length=250)
+    apellido = models.CharField(max_length=250)
+    email = models.EmailField()
+    telefono = models.CharField(max_length=20)
+    cedula = models.CharField(max_length=20, unique=True, default='0000000000')
+    area = models.ForeignKey(Area, on_delete=models.CASCADE)
+    estado = models.CharField(max_length=1, choices=ESTADO_CHOICES, default='A')
+
+    def __str__(self):
+        return f'{self.nombre} {self.apellido} - {self.area.codigo}'
+

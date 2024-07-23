@@ -1,0 +1,49 @@
+{% extends "plantilla.html" %} <!-- Heredar lo de plantilla.html -->
+
+{% block body %}
+<h1>Editar Responsable</h1>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <form action="{% url 'procesarActualizacionResponsable' %}" method="post">
+                {% csrf_token %}
+                <input type="hidden" name="id" value="{{ responsableEditar.id }}">
+                
+                <label for="nombre"><b>Nombre:</b></label>
+                <input type="text" name="nombre" class="form-control" value="{{ responsableEditar.nombre }}" id="nombre" placeholder="Ingrese el nombre del responsable" required>
+                
+                <label for="apellido"><b>Apellido:</b></label>
+                <input type="text" name="apellido" class="form-control" value="{{ responsableEditar.apellido }}" id="apellido" placeholder="Ingrese el apellido del responsable" required>
+                
+                <label for="email"><b>Email:</b></label>
+                <input type="email" name="email" class="form-control" value="{{ responsableEditar.email }}" id="email" placeholder="Ingrese el email del responsable" required>
+                
+                <label for="telefono"><b>Teléfono:</b></label>
+                <input type="text" name="telefono" class="form-control" value="{{ responsableEditar.telefono }}" id="telefono" placeholder="Ingrese el teléfono del responsable" required>
+                
+                <label for="cedula"><b>Cédula:</b></label>
+                <input type="text" name="cedula" class="form-control" value="{{ responsableEditar.cedula }}" id="cedula" placeholder="Ingrese la cédula del responsable" required>
+                
+                <label for="area"><b>Área:</b></label>
+                <select name="area" class="form-control" id="area" required>
+                    {% for area in areas %}
+                    <option value="{{ area.id }}" {% if area.id == responsableEditar.area.id %}selected{% endif %}>{{ area.nombre }}</option>
+                    {% endfor %}
+                </select>
+                
+                <label for="estado"><b>Estado:</b></label>
+                <select name="estado" class="form-control" id="estado" required>
+                    <option value="A" {% if responsableEditar.estado == 'A' %}selected{% endif %}>Activo</option>
+                    <option value="I" {% if responsableEditar.estado == 'I' %}selected{% endif %}>Inactivo</option>
+                </select>
+                
+                <br>
+                <button type="submit" class="btn btn-warning">Actualizar</button>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <a href="{% url 'gestionResponsables' %}" class="btn btn-secondary">Cancelar</a>
+            </form>
+        </div>
+    </div>
+</div>
+<br>
+{% endblock %}
