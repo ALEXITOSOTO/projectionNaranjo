@@ -26,13 +26,12 @@
 
 <body>
     <div id="app">
-        <!--INICIO MENU-->
         <div id="sidebar" class="active">
             <div class="sidebar-wrapper active">
                 <div class="sidebar-header">
                     <div class="d-flex justify-content-between">
                         <div class="logo">
-                            <a href="{% static 'index.html' %}"><img src="{% static 'plantilla/maz/dist/assets/images/logo/logo.png' %}" alt="Logo" srcset=""></a>
+                            <a href="#"><img src="{% static 'plantilla/maz/dist/assets/images/logo/logo.png' %}" alt="Logo" srcset=""></a>
                         </div>
                         <div class="toggler">
                             <a href="#" class="sidebar-hide d-xl-none d-block"><i class="bi bi-x bi-middle"></i></a>
@@ -44,26 +43,26 @@
                         <li class="sidebar-title">Menu</li>
 
                         <li class="sidebar-item active ">
-                            <a href="{% url 'home' %}" class='sidebar-link'>
+                            <a href="index.html" class='sidebar-link'>
                                 <i class="bi bi-grid-fill"></i>
-                                <span>Home</span>
+                                <span>Administrador</span>
                             </a>
                         </li>
 
                         <li class="sidebar-item  has-sub">
                             <a href="#" class='sidebar-link'>
                                 <i class="bi bi-stack"></i>
-                                <span>Gestión</span>
+                                <span>Home</span>
                             </a>
                             <ul class="submenu ">
                                 <li class="submenu-item ">
-                                    <a href="{% url 'gestionAreas' %}">Áreas</a>
+                                    <a href="{% url 'gestionAreas' %}">Areas</a>
                                 </li>
                                 <li class="submenu-item ">
-                                    <a href="component-badge.html">Bloques</a>
+                                    <a href="{% url 'gestionResponsables' %}">Responsables</a>
                                 </li>
                                 <li class="submenu-item ">
-                                    <a href="component-breadcrumb.html">Responsables</a>
+                                    <a href="#">Bloques</a>
                                 </li>
                                 <li class="submenu-item ">
                                     <a href="component-button.html">Button</a>
@@ -386,7 +385,14 @@
                 <button class="sidebar-toggler btn x"><i data-feather="x"></i></button>
             </div>
         </div>
-        <!--FIN MENU-->
+        <div id="main">
+            <header class="mb-3">
+                <a href="#" class="burger-btn d-block d-xl-none">
+                    <i class="bi bi-justify fs-3"></i>
+                </a>
+            </header>
+
+            <!--FIN MENU-->
 
             <!--Inicio codigo jinja2-->
             {% block body %}
@@ -398,15 +404,23 @@
 
         <!--FIN FOOTER-->
 
-        <script src="{% static 'plantilla/maz/dist/assets/vendors/perfect-scrollbar/perfect-scrollbar.min.js' %}"></script>
-        <script src="{% static 'plantilla/maz/dist/assets/js/bootstrap.bundle.min.js' %}"></script>
-
-        <script src="{% static 'plantilla/maz/dist/assets/vendors/apexcharts/apexcharts.js' %}"></script>
-        <script src="{% static 'plantilla/maz/dist/assets/js/pages/dashboard.js' %}"></script>
-
-        <script src="{% static 'plantilla/maz/dist/assets/js/main.js' %}"></script>
+            <footer>
+                <div class="footer clearfix mb-0 text-muted">
+                    <div class="float-start">
+                        <p>2024 &copy; Bela - Happy</p>
+                    </div>
+                    
+                </div>
+            </footer>
+        </div>
     </div>
+    <script src="{% static 'plantilla/maz/dist/assets/vendors/perfect-scrollbar/perfect-scrollbar.min.js' %}"></script>
+    <script src="{% static 'plantilla/maz/dist/assets/js/bootstrap.bundle.min.js' %}"></script>
 
+    <script src="{% static 'plantilla/maz/dist/assets/vendors/apexcharts/apexcharts.js' %}"></script>
+    <script src="{% static 'plantilla/maz/dist/assets/js/pages/dashboard.js' %}"></script>
+
+    <script src="{% static 'plantilla/maz/dist/assets/js/main.js' %}"></script>
 </body>
 {% if messages %}
         {% for mensaje in messages %}
