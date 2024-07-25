@@ -8,6 +8,13 @@ def home(request):
     return render(request,"home.html")
 
 
+#LOGINS
+
+def loginAdministrador(request):
+    return render(request, 'Logins/loginAdministrador.html')
+
+
+
 #AREAS
 
 def gestionAreas(request):
