@@ -1,7 +1,7 @@
 from django.http import JsonResponse
 from django.shortcuts import redirect, render
 from django.contrib import messages
-from .models import Area, Responsable
+from .models import Area, Responsable, Bloques
 
 # Create your views here.
 def home(request):
@@ -123,3 +123,60 @@ def procesarActualizacionResponsable(request):
     messages.success(request, 'Responsable actualizado exitosamente.')
     return redirect('gestionResponsables')
 
+
+#BLOQUE
+def listadoBloques(request):
+    bloques = Bloques.objects.all()
+    return render(request, "Bloques/listado.html", {"bloques": bloques})
+
+def gestionBloques(request):
+    areas = Area.objects.all()
+    return render(request, 'Bloques/gestion.html', {'areas': areas})
+
+def guardarBloque(request):
+    codigo = request.POST["codigo"]
+    nombre = request.POST["nombre"]
+    descripcion = request.POST["descripcion"]
+    area_id = request.POST["area"]
+    area = Area.objects.get(id=area_id)
+    
+    nuevoBloque = Bloques.objects.create(
+        codigo=codigo,
+        nombre=nombre,
+        descripcion=descripcion,
+        area=area
+    )
+    
+    return JsonResponse({
+        'estado': True,
+        'mensaje': 'Bloque registrado exitosamente.'
+    })
+
+def eliminarBloque(request, id):
+    bloqueEliminar = Bloques.objects.get(id=id)
+    bloqueEliminar.delete()
+    messages.success(request, 'Bloque eliminado exitosamente.')
+    return redirect('gestionBloques')
+
+def editarBloque(request, id):
+    bloqueEditar = Bloques.objects.get(id=id)
+    areas = Area.objects.all()
+    return render(request, 'Bloques/editar.html', {'bloqueEditar': bloqueEditar, 'areas': areas})
+
+def procesarActualizacionBloque(request):
+    id = request.POST['id']
+    codigo = request.POST['codigo']
+    nombre = request.POST['nombre']
+    descripcion = request.POST['descripcion']
+    area_id = request.POST["area"]
+    area = Area.objects.get(id=area_id)
+    
+    bloqueConsultado = Bloques.objects.get(id=id)
+    bloqueConsultado.codigo = codigo
+    bloqueConsultado.nombre = nombre
+    bloqueConsultado.descripcion = descripcion
+    bloqueConsultado.area = area
+    bloqueConsultado.save()
+    
+    messages.success(request, 'Bloque actualizado exitosamente.')
+    return redirect('gestionBloques')

@@ -29,3 +29,13 @@ class Responsable(models.Model):
     def __str__(self):
         return f'{self.nombre} {self.apellido} - {self.area.codigo}'
 
+class Bloques(models.Model):
+    id=models.AutoField(primary_key=True)
+    codigo=models.CharField(max_length=250, unique=True)
+    nombre=models.CharField(max_length=250)
+    descripcion=models.TextField()
+    area = models.ForeignKey(Area, on_delete=models.CASCADE)
+
+    def __str__(self):
+        fila='{0} - {1} - {2}'
+        return fila.format(self.id,self.codigo,self.descripcion)

@@ -1,0 +1,30 @@
+{% extends "plantilla.html" %} <!--Heredar lo de platilla.html-->
+{% block body %}
+<form method="POST" action="{% url 'procesarActualizacionBloque' %}">
+    {% csrf_token %}
+    <input type="hidden" name="id" value="{{ bloqueEditar.id }}">
+    <div class="form-group">
+        <label for="codigo">Código</label>
+        <input type="text" class="form-control" id="codigo" name="codigo" value="{{ bloqueEditar.codigo }}" required>
+    </div>
+    <div class="form-group">
+        <label for="nombre">Nombre</label>
+        <input type="text" class="form-control" id="nombre" name="nombre" value="{{ bloqueEditar.nombre }}" required>
+    </div>
+    <div class="form-group">
+        <label for="descripcion">Descripción</label>
+        <textarea class="form-control" id="descripcion" name="descripcion" rows="3" required>{{ bloqueEditar.descripcion }}</textarea>
+    </div>
+    <div class="form-group">
+        <label for="area">Área</label>
+        <select class="form-control" id="area" name="area" required>
+            {% for area in areas %}
+            <option value="{{ area.id }}" {% if bloqueEditar.area.id == area.id %}selected{% endif %}>
+                {{ area.nombre }}
+            </option>
+            {% endfor %}
+        </select>
+    </div>
+    <button type="submit" class="btn btn-primary">Guardar</button>
+</form>
+{% endblock %}

@@ -21,4 +21,13 @@ urlpatterns = [
     path('eliminarResponsable/<id>/', views.eliminarResponsable, name='eliminarResponsable'),
     path('editarResponsable/<id>/', views.editarResponsable, name='editarResponsable'),
     path('procesarActualizacionResponsable/', views.procesarActualizacionResponsable, name='procesarActualizacionResponsable'),
+
+
+    #BLOQUES
+    path('Bloques/listado.html/', views.listadoBloques, name='listadoBloques'),
+    path('Bloques/gestion.html/', views.gestionBloques, name='gestionBloques'),
+    path('guardarBloque/', views.guardarBloque, name='guardarBloque'),
+    path('eliminarBloque/<id>/', views.eliminarBloque, name='eliminarBloque'),
+    path('editarBloque/<id>/', views.editarBloque, name='editarBloque'),
+    path('procesarActualizacionBloque/', views.procesarActualizacionBloque, name='procesarActualizacionBloque'),
 ]
