@@ -1,13 +1,14 @@
 from django.urls import path
 from . import views
+from django.contrib.auth import views as auth_views
 
 urlpatterns = [
     #HOME
     path('',views.home, name='home'),
 
     #LOGIN
-    path('login/', views.login, name='login'),  # Cambiado a 'login/' para mayor claridad
-    path('logout/', views.salir, name='logout'),  # Cambiado a 'logout/' para mayor claridad
+    path('login/', views.login, name='login'),
+    path('logout/', views.custom_logout, name='logout'),
 
 
     #AREAS

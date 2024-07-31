@@ -1,4 +1,3 @@
-{% load static %}
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -10,7 +9,7 @@
     <div class="container">
         <div class="login-form">
             <h2>Iniciar sesión</h2>
-            <form action="{% url 'login' %}" method="post">
+            <form id="loginForm" method="post">
                 {% csrf_token %}
                 <label for="username">Usuario:</label>
                 <input type="text" id="username" name="username" required>
@@ -19,10 +18,44 @@
                 <input type="password" id="password" name="password" required>
                 
                 <button type="submit">Iniciar sesión</button>
-            </form>            
+            </form>
+            <div id="loginMessage"></div>
         </div>
         <div class="image-container"></div>
     </div>
+    <script>
+        $(document).ready(function() {
+            // Obtén el token CSRF del elemento de formulario
+            var csrftoken = $('input[name="csrfmiddlewaretoken"]').val();
+
+            $('#loginForm').on('submit', function(e) {
+                e.preventDefault(); // Previene el envío tradicional del formulario
+                
+                var formData = $(this).serialize(); // Obtiene los datos del formulario
+
+                $.ajax({
+                    url: "{% url 'gestionAreas' %}", // La URL a la que se enviarán los datos
+                    type: "POST",
+                    data: formData,
+                    headers: {
+                        'X-CSRFToken': csrftoken // Incluye el token CSRF en el encabezado
+                    },
+                    success: function(response) {
+                        if (response.success) {
+                            $('#loginMessage').text('Login successful').css('color', 'green');
+                            // Redirigir a la página de inicio o a otra página si es necesario
+                            window.location.href = "{% url 'gestionAreas' %}";
+                        } else {
+                            $('#loginMessage').text(response.message).css('color', 'red');
+                        }
+                    },
+                    error: function(xhr, errmsg, err) {
+                        $('#loginMessage').text('An error occurred: ' + errmsg).css('color', 'red');
+                    }
+                });
+            });
+        });
+    </script>
 </body>
 <style>
     body {

@@ -4,21 +4,35 @@ from django.contrib import messages
 from .models import Area, Responsable, Bloques
 from django.contrib.auth.decorators import login_required #Pra el login
 from django.contrib.auth import logout
+from django.contrib.auth import authenticate, login
+from django.views.decorators.csrf import csrf_exempt
+
 # Create your views here.
 
-@login_required
 def home(request):
     return render(request, "home.html")
 
 #LOGINS
+@csrf_exempt  # Solo para pruebas, quita esto en producción y usa CSRF token en la solicitud AJAX
 def login(request):
-    return render(request, 'registration/login.html')
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            login(request, user)
+            return JsonResponse({'success': True, 'message': 'Login successful'})
+        else:
+            return JsonResponse({'success': False, 'message': 'Invalid credentials'})
+    return JsonResponse({'success': False, 'message': 'Invalid request method'})
 
-def salir(request):
+def custom_logout(request):
     logout(request)
     return redirect('login')
 
+
 #AREAS
+@login_required
 def gestionAreas(request):
     return render(request,'Areas/gestion.html')
 
