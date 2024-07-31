@@ -6,7 +6,9 @@ urlpatterns = [
     path('',views.home, name='home'),
 
     #LOGIN
-    path('Logins/loginAdministrador.html/', views.loginAdministrador, name='loginAdministrador'),
+    path('login/', views.login, name='login'),  # Cambiado a 'login/' para mayor claridad
+    path('logout/', views.salir, name='logout'),  # Cambiado a 'logout/' para mayor claridad
+
 
     #AREAS
     path('Areas/listado.html/', views.listadoAreas, name='listadoAreas'),

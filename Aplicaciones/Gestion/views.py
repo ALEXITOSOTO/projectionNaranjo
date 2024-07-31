@@ -2,21 +2,23 @@ from django.http import JsonResponse
 from django.shortcuts import redirect, render
 from django.contrib import messages
 from .models import Area, Responsable, Bloques
-
+from django.contrib.auth.decorators import login_required #Pra el login
+from django.contrib.auth import logout
 # Create your views here.
-def home(request):
-    return render(request,"home.html")
 
+@login_required
+def home(request):
+    return render(request, "home.html")
 
 #LOGINS
+def login(request):
+    return render(request, 'registration/login.html')
 
-def loginAdministrador(request):
-    return render(request, 'Logins/loginAdministrador.html')
-
-
+def salir(request):
+    logout(request)
+    return redirect('login')
 
 #AREAS
-
 def gestionAreas(request):
     return render(request,'Areas/gestion.html')
 
