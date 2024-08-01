@@ -12410,8 +12410,12 @@ fieldset[disabled] .btn-link.active {
 
 .footer {
   padding: 50px 0;
-  border-top: 2px solid #435DB5;
-  background: radial-gradient(ellipse at bottom, #292D61 30%, #171941 80%);
+  border-top: 2px solid #1d1d1b;
+  background: #1d1d1b;
+
+
+
+
 }
 
 .footer [class*="container-"] {
