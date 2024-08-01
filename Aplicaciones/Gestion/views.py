@@ -33,6 +33,9 @@ def custom_logout(request):
 
 #AREAS
 @login_required
+def inicio(request):
+    return render(request,'inicio.html')
+                   
 def gestionAreas(request):
     return render(request,'Areas/gestion.html')
 

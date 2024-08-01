@@ -1,32 +1,65 @@
-<table class="table table-bordered">
-    <thead>
-        <tr>
-            <th>Id</th>
-            <th>Código</th>
-            <th>Nombre</th>
-            <th>Descripción</th>
-            <th>Acciones</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for area in areas %}
-        <tr>
-            <td>{{ area.id }}</td>
-            <td>{{ area.codigo }}</td>
-            <td>{{ area.nombre }}</td>
-            <td>{{ area.descripcion }}</td>
-            <td class="text-center">
-                <a href="{% url 'editarArea' area.id %}" class="btn btn-outline-warning btn-circle"
-                title="Editar Cine">
-                    <i class="fas fa-pencil">Editar</i>
-                </a>
-                <a href="#" onclick="return confirmDelete('{{ area.id }}');" class="btn btn-outline-danger btn-circle">
-                    <i class="fas fa-trash"> Eliminar</i>
-                </a>              
-            </td>
-        </tr>
-        {% endfor %}
-    </tbody>
+<section class="section">
+    <div class="row" id="basic-table">
+        <div class="col-12 col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">Resgitro de areas de Areas</h4>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">Resgitro de areas de Areas</h4>
+                </div>
+                <div class="card-content">
+                    <div class="card-body">
+                        <p class="card-text">Using the most basic table up, here’s how
+                            <code>.table</code>-based tables look in Bootstrap. You can use any example
+                            of below table for your table and it can be use with any type of bootstrap
+                            tables.
+                        </p>
+                    </div>
+
+                    <!-- Table with no outer spacing -->
+                    <div class="table-responsive">
+                        <table class="table mb-0 table-lg">
+                            <thead>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Código</th>
+                                    <th>Nombre</th>
+                                    <th>Descripción</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for area in areas %}
+                                <tr>
+                                    <td>{{ area.id }}</td>
+                                    <td>{{ area.codigo }}</td>
+                                    <td>{{ area.nombre }}</td>
+                                    <td>{{ area.descripcion }}</td>
+                                    <td class="text-center">
+                                        <a href="{% url 'editarArea' area.id %}" class="btn btn-outline-warning btn-circle"
+                                        title="Editar Cine">
+                                            <i class="fas fa-pencil">Editar</i>
+                                        </a>
+                                        <a href="#" onclick="return confirmDelete('{{ area.id }}');" class="btn btn-outline-danger btn-circle">
+                                            <i class="fas fa-trash"> Eliminar</i>
+                                        </a>              
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
 </table>
 <script>
     function confirmDelete(areaId) {

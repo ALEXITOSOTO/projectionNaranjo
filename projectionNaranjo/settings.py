@@ -28,7 +28,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 LOGIN_URL = 'registration/login/'
-LOGIN_REDIRECT_URL = 'gestionAreas'
+LOGIN_REDIRECT_URL = 'inicio'
 LOGOUT_REDIRECT_URL = 'registration/login/'
 
 # Application definition

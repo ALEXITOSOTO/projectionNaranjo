@@ -10,6 +10,8 @@ urlpatterns = [
     path('login/', views.login, name='login'),
     path('logout/', views.custom_logout, name='logout'),
 
+    path('inicio/', views.inicio, name='inicio'),
+
 
     #AREAS
     path('Areas/listado.html/', views.listadoAreas, name='listadoAreas'),
