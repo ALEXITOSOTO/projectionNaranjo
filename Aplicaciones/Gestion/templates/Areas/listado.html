@@ -1,9 +1,10 @@
+{% load static %}
 <section class="section">
     <div class="row" id="basic-table">
         <div class="col-12 col-md-12">
             <div class="card">
                 <div class="card-header">
-                    <h4 class="card-title">Resgitro de areas de Areas</h4>
+                    <h4 class="card-title">Registro de areas de Areas</h4>
                 </div>
             </div>
         </div>
@@ -43,10 +44,10 @@
                                     <td class="text-center">
                                         <a href="{% url 'editarArea' area.id %}" class="btn btn-outline-warning btn-circle"
                                         title="Editar Cine">
-                                            <i class="fas fa-pencil">Editar</i>
+                                            <i class="fas fa-pencil"></i>
                                         </a>
                                         <a href="#" onclick="return confirmDelete('{{ area.id }}');" class="btn btn-outline-danger btn-circle">
-                                            <i class="fas fa-trash"> Eliminar</i>
+                                            <i class="fas fa-trash"></i>
                                         </a>              
                                     </td>
                                 </tr>
@@ -56,6 +57,9 @@
                     </div>
                 </div>
             </div>
+        </div>
+        <div>
+            <a href="" class="btn btn-outline-warning btn-circle"><i class="fas fa-pencil"></i>Exportar</a>
         </div>
     </div>
 </section>
