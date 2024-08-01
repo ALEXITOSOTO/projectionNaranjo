@@ -1,4 +1,8 @@
 <!DOCTYPE html>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.min.js"></script>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
@@ -24,36 +28,43 @@
         <div class="image-container"></div>
     </div>
     <script>
-        $(document).ready(function() {
-            // Obtén el token CSRF del elemento de formulario
-            var csrftoken = $('input[name="csrfmiddlewaretoken"]').val();
-
-            $('#loginForm').on('submit', function(e) {
-                e.preventDefault(); // Previene el envío tradicional del formulario
-                
-                var formData = $(this).serialize(); // Obtiene los datos del formulario
-
+        $('#login-form').validate({
+            rules: {
+                user: {
+                    required: true
+                },
+                pass: {
+                    required: true
+                }
+            },
+            messages: {
+                user: {
+                    required: "El usuario es necesario"
+                },
+                pass: {
+                    required: "La contraseña es necesaria"
+                }
+            },
+            submitHandler: function (formulario) {
                 $.ajax({
-                    url: "{% url 'gestionAreas' %}", // La URL a la que se enviarán los datos
-                    type: "POST",
-                    data: formData,
-                    headers: {
-                        'X-CSRFToken': csrftoken // Incluye el token CSRF en el encabezado
-                    },
-                    success: function(response) {
-                        if (response.success) {
-                            $('#loginMessage').text('Login successful').css('color', 'green');
-                            // Redirigir a la página de inicio o a otra página si es necesario
-                            window.location.href = "{% url 'gestionAreas' %}";
+                    type: 'POST',
+                    url: '{% url "gestionAreas" %}',
+                    data: $(formulario).serialize(),
+                    success: function (data) {
+                        if (data.estado) {
+                            window.location.href = data.redirect_url;
                         } else {
-                            $('#loginMessage').text(response.message).css('color', 'red');
+                            $('#login-form').validate().showErrors({
+                                user: data.mensajeUsu || 'Usuario incorrecto',
+                                pass: data.mensaje || 'Contraseña incorrecta'
+                            });
                         }
                     },
-                    error: function(xhr, errmsg, err) {
-                        $('#loginMessage').text('An error occurred: ' + errmsg).css('color', 'red');
+                    error: function () {
+                        alert('Error en el inicio de sesión. Por favor, intente nuevamente.');
                     }
                 });
-            });
+            }
         });
     </script>
 </body>
