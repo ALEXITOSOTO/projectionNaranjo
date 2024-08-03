@@ -13,22 +13,56 @@
     <title>Login</title>
 </head>
 <body>
-    <div class="container">
-        <div class="login-form">
-            <h2>Iniciar sesión</h2>
+    <div id="wrapper">
+        <div id="left">
+          <div id="signin">
+            <div class="logo">
+              <img src="{% static 'plantilla/BLK/assets/img/logoN.png' %}" alt="Sluralpright" />
+            </div>
             <form id="loginForm" method="post">
+              <div>
                 {% csrf_token %}
                 <label for="username">Usuario:</label>
-                <input type="text" id="username" name="username" required>
-                
+                <input class="text-input" type="text" id="username" name="username" required/>
+              </div>
+              <div>
                 <label for="password">Contraseña:</label>
-                <input type="password" id="password" name="password" required>
-                
-                <button type="submit">Iniciar sesión</button>
+                <input class="text-input" type="password" id="password" name="password" required>
+              </div>
+              <button type="submit" class="primary-btn">Ingresar</button>
             </form>
-            <div id="loginMessage"></div>
+            <div class="links">
+              <a href="#">Reestablecer contraseña</a>
+            </div>
+            <div class="or">
+              <hr class="bar" />
+              <span>O</span>
+              <hr class="bar" />
+            </div>
+            <a href="#" class="secondary-btn">Cambiar de cuenta</a>
+          </div>
+          <footer id="main-footer">
+            <p>Copyright &copy; 2024, SS All Rights Reserved</p>
+            <div>
+              <a href="#">terminos de uso</a> | <a href="#">Politias de privacidad</a>
+            </div>
+          </footer>
         </div>
-        <div class="image-container"></div>
-    </div>
+        <div id="right">
+          <div id="showcase">
+            <div class="showcase-content">
+              <h1 class="showcase-text">
+                Floreciendo <strong> Juntos</strong>
+              </h1>
+              <a href="#" class="secondary-btn">Contactate</a>
+            </div>
+          </div>
+        </div>
+      </div>
 </body>
 </html>
+
+
+
+
+
