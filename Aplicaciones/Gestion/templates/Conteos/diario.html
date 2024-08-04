@@ -1,0 +1,80 @@
+{% extends "plantilla.html" %} <!--Heredar lo de platilla.html-->
+{% load static %}
+{% block body %}
+{% load static %}
+<script src="{% static 'js/Areas/listado.js' %}"></script>
+<section class="section">
+    <div class="row" id="basic-table">
+        <div class="col-12 col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">Conteo Diario</h4>
+                </div>
+            </div>
+            <h5>Filtrar por</h5>
+            <div class="row">  
+                <div class="col-md-6">
+                    <select id="iptables-rules" name="rule" style="width: 60%;">&nbsp;
+                        <option value="">Por dia</option>
+                        <option value="1">dia</option>
+                    </select>
+                    <input type="date" name="" id="">
+                </div>
+                <div class="col-md-6">
+                    <select id="iptables-rules" name="rule" style="width: 100%;">
+                        <option value="">Por Responsable</option>
+                        <option value="1">Respon</option>
+                    </select>
+                </div>
+            </div><br>
+            <div class="row">  
+                <div class="col-md-6">
+                    <select id="iptables-rules" name="rule" style="width: 100%;">
+                        <option value="">Por variedad</option>
+                        <option value="1">variedad1</option>
+                    </select>
+                </div>
+                <div class="col-md-6">
+                    <select id="iptables-rules" name="rule" style="width: 100%;">
+                        <option value="">Por bloque</option>
+                        <option value="1">Boque</option>
+                    </select>
+                </div>
+            </div>
+        </div>&nbsp;&nbsp;&nbsp;
+        <div class="col-12 col-md-12">
+            <div class="card">
+                <div class="card-content">
+                    <div class="table-responsive" style="height: 50vh;">
+                        <table class="table table-bordered table-striped table-hover" id="tbl-directores">
+                            <thead>
+                                <tr class="text-end">
+                                    <i class="fa-solid fa-file-pdf"></i>&nbsp;&nbsp;&nbsp;
+                                    <i class="fa-solid fa-file-excel"></i>&nbsp;&nbsp;&nbsp;
+                                    <i class="fa-solid fa-file-csv"></i>&nbsp;&nbsp;&nbsp;
+                                </tr>
+                                <tr>
+                                    <th>Área</th>
+                                    <th>Bloque</th>
+                                    <th>Variedad</th>
+                                    <th>Lunes</th>
+                                    <th>Martes</th>
+                                    <th>Miercoles</th>
+                                    <th>Jueves</th>
+                                    <th>Viernes</th>
+                                    <th>Sabado</th>
+                                    <th>Domigo</th>
+                                    <th>Total</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+</table>
+
+{% endblock %}

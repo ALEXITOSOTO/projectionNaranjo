@@ -217,3 +217,6 @@ def procesarActualizacionBloque(request):
     
     messages.success(request, 'Bloque actualizado exitosamente.')
     return redirect('gestionBloques')
+
+def diario(request):
+    return render(request, "Conteos/diario.html")

@@ -47,4 +47,7 @@ urlpatterns = [
     path('eliminarBloque/<id>/', views.eliminarBloque, name='eliminarBloque'),
     path('editarBloque/<id>/', views.editarBloque, name='editarBloque'),
     path('procesarActualizacionBloque/', views.procesarActualizacionBloque, name='procesarActualizacionBloque'),
+
+    path('Conteos/diario.html', views.diario, name='diario'),
+
 ]
