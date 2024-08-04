@@ -12,8 +12,10 @@ from django.views.decorators.csrf import csrf_exempt
 def home(request):
     return render(request, "home.html")
 
-#LOGINS
-@csrf_exempt  # Solo para pruebas, quita esto en producción y usa CSRF token en la solicitud AJAX
+
+
+#LOGIN ADMINISTRADOR
+@csrf_exempt  
 def login(request):
     if request.method == 'POST':
         username = request.POST.get('username')
@@ -29,6 +31,15 @@ def login(request):
 def custom_logout(request):
     logout(request)
     return redirect('login')
+
+
+#LOGIN AGENTE DE CAMPO
+def loginAgente(request):
+    return render(request, "registration/loginAgente.html")
+
+#LOGIN USUARIO DE LECCTURA
+def loginLectura(request):
+    return render(request, "registration/loginLectura.html")
 
 
 #AREAS

@@ -6,9 +6,17 @@ urlpatterns = [
     #HOME
     path('',views.home, name='home'),
 
-    #LOGIN
+    #LOGIN ADMINISTRADOR
     path('login/', views.login, name='login'),
     path('logout/', views.custom_logout, name='logout'),
+
+    #LOGIN AGENTE
+    path('loginAgente/', views.loginAgente, name='loginAgente'),
+
+
+    #LOGIN AGENTE
+    path('loginLectura/', views.loginLectura, name='loginLectura'),
+
 
     path('inicio/', views.inicio, name='inicio'),
 
