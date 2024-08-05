@@ -1,12 +1,15 @@
 from django.shortcuts import render
+from django.http import HttpResponse
+from django.conf import settings
 from Aplicaciones.Gestion.models import Area, Responsable, Bloques, Variedades
 from .models import ConteoDiario
 from django.db.models import Sum, Case, When, IntegerField
 from reportlab.lib.pagesizes import letter
-from reportlab.pdfgen import canvas
-from reportlab.platypus import SimpleDocTemplate, Table, TableStyle
+from reportlab.platypus import SimpleDocTemplate, Table, TableStyle, Paragraph, Image
 from reportlab.lib import colors
-from django.http import HttpResponse
+from reportlab.lib.styles import getSampleStyleSheet
+from datetime import datetime
+import os
 
 
 def registro_diario(request):
@@ -93,6 +96,23 @@ def generar_reporte(request):
     doc = SimpleDocTemplate(response, pagesize=letter)
     elements = []
 
+    # Estilos para el PDF
+    styles = getSampleStyleSheet()
+    
+    # Agregar un título
+    title = Paragraph("Reporte Diario de Conteo", styles['Title'])
+    elements.append(title)
+
+    # Ruta de la imagen en static
+    image_path = '/home/belagd/Documents/Proyectos/projectionnaranjo/projectionNaranjo/static/plantilla/BLK/assets/img/logoN.png'
+
+    # Agregar la imagen
+    logo = Image(image_path)
+    logo.width = 200  # Ajusta el tamaño según sea necesario
+    logo.height = 100
+    logo.hAlign = 'CENTER'
+    elements.append(logo)
+
     # Obtener datos de ConteoDiario
     conteos_diarios = ConteoDiario.objects.all()
     
@@ -103,10 +123,10 @@ def generar_reporte(request):
             conteo.fecha,
             conteo.dia,
             conteo.conteo_del_dia,
-            conteo.area.nombre,  # Asumiendo que el modelo Area tiene un campo 'nombre'
-            conteo.responsable.nombre,  # Asumiendo que el modelo Responsable tiene un campo 'nombre'
-            conteo.bloque.nombre,  # Asumiendo que el modelo Bloques tiene un campo 'nombre'
-            conteo.variedad.nombre  # Asumiendo que el modelo Variedades tiene un campo 'nombre'
+            conteo.area.nombre,
+            conteo.responsable.nombre,
+            conteo.bloque.nombre,
+            conteo.variedad.nombre
         ])
 
     # Crear y estilizar la tabla
@@ -121,6 +141,10 @@ def generar_reporte(request):
         ('GRID', (0, 0), (-1, -1), 1, colors.black)
     ]))
     elements.append(table)
+
+    # Agregar un pie de página
+    footer = Paragraph("Reporte generado el: {}".format(datetime.now().strftime('%Y-%m-%d %H:%M:%S')), styles['Normal'])
+    elements.append(footer)
 
     # Construir el documento
     doc.build(elements)
