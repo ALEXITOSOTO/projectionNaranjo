@@ -6,7 +6,10 @@ from django.contrib.auth.decorators import login_required #Pra el login
 from django.contrib.auth import logout
 from django.contrib.auth import authenticate, login
 from django.views.decorators.csrf import csrf_exempt
-
+from django.db.models import Sum, Q
+from datetime import date, timedelta
+from Aplicaciones.Campo.models import ConteoDiario
+from django.db.models import Sum, Case, When, IntegerField
 # Create your views here.
 
 def home(request):
@@ -218,5 +221,67 @@ def procesarActualizacionBloque(request):
     messages.success(request, 'Bloque actualizado exitosamente.')
     return redirect('gestionBloques')
 
+from django.shortcuts import render, redirect
+from django.http import JsonResponse
+from django.contrib import messages
+from .models import Variedades, Area
+
+# Listar Variedades
+def listadoVariedades(request):
+    variedades = Variedades.objects.all()
+    return render(request, "Variedades/listado.html", {"variedades": variedades})
+
+# Gestión de Variedades
+def gestionVariedades(request):
+    areas = Area.objects.all()
+    return render(request, 'Variedades/gestion.html', {'areas': areas})
+
+# Guardar Variedad
+def guardarVariedad(request):
+    nombre = request.POST["nombre"]
+    caracteristicas = request.POST["caracteristicas"]
+    
+    nuevaVariedad = Variedades.objects.create(
+        nombre=nombre,
+        caracteristicas=caracteristicas
+    )
+    
+    return JsonResponse({
+        'estado': True,
+        'mensaje': 'Variedad registrada exitosamente.'
+    })
+
+# Eliminar Variedad
+def eliminarVariedad(request, id):
+    variedadEliminar = Variedades.objects.get(id=id)
+    variedadEliminar.delete()
+    messages.success(request, 'Variedad eliminada exitosamente.')
+    return redirect('gestionVariedades')
+
+# Editar Variedad
+def editarVariedad(request, id):
+    variedadEditar = Variedades.objects.get(id=id)
+    return render(request, 'Variedades/editar.html', {'variedadEditar': variedadEditar})
+
+# Procesar Actualización de Variedad
+def procesarActualizacionVariedad(request):
+    id = request.POST['id']
+    nombre = request.POST['nombre']
+    caracteristicas = request.POST['caracteristicas']
+    
+    variedadConsultada = Variedades.objects.get(id=id)
+    variedadConsultada.nombre = nombre
+    variedadConsultada.caracteristicas = caracteristicas
+    variedadConsultada.save()
+    
+    messages.success(request, 'Variedad actualizada exitosamente.')
+    return redirect('gestionVariedades')
+
+
+
 def diario(request):
     return render(request, "Conteos/diario.html")
+
+
+
+

@@ -1,0 +1,62 @@
+{% load static %}
+<script src="{% static 'js/Variedades/listado.js' %}"></script>
+<section class="section">
+    <div class="row" id="basic-table">
+        <div class="col-12 col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">Registro de Variedades</h4>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">Registro de Variedades</h4>
+                </div>
+                <div class="card-content">
+                    <div class="card-body">
+                        <p class="card-text">Aquí se muestra cómo lucen las tablas basadas en <code>.table</code> en Bootstrap. Puedes usar cualquier ejemplo de la tabla a continuación para tu tabla y puede ser usada con cualquier tipo de tabla de Bootstrap.</p>
+                    </div>
+
+                    <!-- Table with no outer spacing -->
+                    <div class="table-responsive">
+                        <table class="table mb-0 table-lg">
+                            <thead>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Nombre</th>
+                                    <th>Características</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for variedad in variedades %}
+                                <tr>
+                                    <td>{{ variedad.id }}</td>
+                                    <td>{{ variedad.nombre }}</td>
+                                    <td>{{ variedad.caracteristicas }}</td>
+                                    <td class="text-center">
+                                        <a href="{% url 'editarVariedad' variedad.id %}" class="btn btn-outline-warning btn-circle" title="Editar Variedad">
+                                            <i class="fas fa-pencil"></i>
+                                        </a>
+                                        <a href="#" onclick="return confirmDelete('{{ variedad.id }}');" class="btn btn-outline-danger btn-circle">
+                                            <i class="fas fa-trash"></i>
+                                        </a>              
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+function confirmDelete(id) {
+    return confirm('¿Estás seguro de que deseas eliminar esta variedad?');
+}
+</script>

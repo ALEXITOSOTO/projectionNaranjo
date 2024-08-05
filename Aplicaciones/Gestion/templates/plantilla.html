@@ -65,6 +65,9 @@
                                 <li class="submenu-item ">
                                     <a href="{%url 'gestionBloques' %}">Bloques</a>
                                 </li>
+                                <li class="submenu-item ">
+                                    <a href="{%url 'gestionVariedades' %}">Variedades</a>
+                                </li>
                             </ul>
                         </li>
                     </ul>
@@ -78,7 +81,7 @@
                             </a>
                             <ul class="submenu ">
                                 <li class="submenu-item ">
-                                    <a href="{% url 'diario' %}">Diario</a>
+                                    <a href="{% url 'mostrar_conteos' %}">Diario</a>
                                 </li>
                                 <li class="submenu-item ">
                                     <a href="">Mensual</a>
@@ -97,6 +100,9 @@
                                 <i class="fa-solid fa-house"></i>
                                 <span>Estimación</span>
                             </a>
+                        </li>
+                        <li class="submenu-item ">
+                            <a href="{% url 'ingresoDiario' %}">Ingresar datos en campo</a>
                         </li>
                     </ul>
                 </div>

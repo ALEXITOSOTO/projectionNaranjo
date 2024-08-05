@@ -1,0 +1,26 @@
+{% extends "plantilla.html" %} <!-- Heredar lo de plantilla.html -->
+{% block body %}
+<h1>Editar variedad</h1>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <form action="{% url 'procesarActualizacionVariedad' %}" method="post">
+                {% csrf_token %}
+                <input type="hidden" name="id" value="{{ variedadEditar.id }}">
+                
+                <label for=""><b>Nombre:</b></label>
+                <input type="text" name="nombre" class="form-control" value="{{ variedadEditar.nombre }}" id="nombre" placeholder="Ingrese el nombre de la variedad">
+                
+                <label for=""><b>Características:</b></label>
+                <textarea name="caracteristicas" id="caracteristicas" class="form-control" rows="3" placeholder="Ingrese las características">{{ variedadEditar.caracteristicas }}</textarea>
+                
+                <br>
+                <button type="submit" class="btn btn-warning">Actualizar</button>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <a href="{% url 'gestionVariedades' %}">Cancelar</a>
+            </form>
+        </div>
+    </div>
+</div>
+<br>
+{% endblock %}

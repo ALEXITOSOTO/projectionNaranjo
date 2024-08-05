@@ -1,0 +1,113 @@
+{% extends "plantilla.html" %}
+{% load static %}
+
+{% block body %}
+<script src="{% static 'js/Areas/listado.js' %}"></script>
+
+<section class="section">
+    <div class="row" id="basic-table">
+        <div class="col-12 col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">Conteo Diario de Plantas Sembradas</h4>
+                </div>
+            </div>
+            <h5>Filtrar por</h5>
+            <div class="row">  
+                <div class="col-md-6">
+                    <select id="iptables-rules" name="rule" style="width: 60%;">&nbsp;
+                        <option value="">Por día</option>
+                        <option value="1">Día</option>
+                    </select>
+                    <input type="date" name="" id="">
+                </div>
+                <div class="col-md-6">
+                    <select id="iptables-rules" name="rule" style="width: 100%;">
+                        <option value="">Por Responsable</option>
+                        <option value="1">Responsable</option>
+                    </select>
+                </div>
+            </div><br>
+            <div class="row">  
+                <div class="col-md-6">
+                    <select id="iptables-rules" name="rule" style="width: 100%;">
+                        <option value="">Por variedad</option>
+                        <option value="1">Variedad 1</option>
+                    </select>
+                </div>
+                <div class="col-md-6">
+                    <select id="iptables-rules" name="rule" style="width: 100%;">
+                        <option value="">Por bloque</option>
+                        <option value="1">Bloque</option>
+                    </select>
+                </div>
+            </div>
+        </div>&nbsp;&nbsp;&nbsp;
+        <div class="col-12 col-md-12">
+            <div class="card">
+                <div class="card-content">
+                    <div class="table-responsive" style="height: 50vh;">
+                        <table class="table table-bordered table-striped table-hover" id="tbl-directores">
+                            <thead>
+                                <tr class="text-end">
+                                    <i class="fa-solid fa-file-pdf"></i>&nbsp;&nbsp;&nbsp;
+                                    <i class="fa-solid fa-file-excel"></i>&nbsp;&nbsp;&nbsp;
+                                    <i class="fa-solid fa-file-csv"></i>&nbsp;&nbsp;&nbsp;
+                                </tr>
+                                <tr>
+                                    <th>Área</th>
+                                    <th>Bloque</th>
+                                    <th>Responsable</th>
+                                    <th>Variedad</th>
+                                    <th>Lunes</th>
+                                    <th>Martes</th>
+                                    <th>Miércoles</th>
+                                    <th>Jueves</th>
+                                    <th>Viernes</th>
+                                    <th>Sábado</th>
+                                    <th>Domingo</th>
+                                    <th>Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for conteo in conteos_diarios %}
+                                    <tr>
+                                        <td>{{ conteo.area.nombre }}</td>
+                                        <td>{{ conteo.bloque.nombre }}</td>
+                                        <td>{{ conteo.responsable.nombre }}</td>
+                                        <td>{{ conteo.variedad.nombre }}</td>
+                                        <td>{% if conteo.dia == "Lunes" %}{{ conteo.conteo_del_dia }}{% else %}0{% endif %}</td>
+                                        <td>{% if conteo.dia == "Martes" %}{{ conteo.conteo_del_dia }}{% else %}0{% endif %}</td>
+                                        <td>{% if conteo.dia == "Miércoles" %}{{ conteo.conteo_del_dia }}{% else %}0{% endif %}</td>
+                                        <td>{% if conteo.dia == "Jueves" %}{{ conteo.conteo_del_dia }}{% else %}0{% endif %}</td>
+                                        <td>{% if conteo.dia == "Viernes" %}{{ conteo.conteo_del_dia }}{% else %}0{% endif %}</td>
+                                        <td>{% if conteo.dia == "Sábado" %}{{ conteo.conteo_del_dia }}{% else %}0{% endif %}</td>
+                                        <td>{% if conteo.dia == "Domingo" %}{{ conteo.conteo_del_dia }}{% else %}0{% endif %}</td>
+                                        <td>{{ conteo.conteo_del_dia }}</td>
+                                    </tr>
+                                {% empty %}
+                                    <tr>
+                                        <td colspan="11">No se encontraron datos.</td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <h2>Total Semanal:</h2>
+    <ul>
+        <li>Lunes: {{ total_semanal_dia.Lunes }}</li>
+        <li>Martes: {{ total_semanal_dia.Martes }}</li>
+        <li>Miércoles: {{ total_semanal_dia.Miércoles }}</li>
+        <li>Jueves: {{ total_semanal_dia.Jueves }}</li>
+        <li>Viernes: {{ total_semanal_dia.Viernes }}</li>
+        <li>Sábado: {{ total_semanal_dia.Sábado }}</li>
+        <li>Domingo: {{ total_semanal_dia.Domingo }}</li>
+        <li>Total General: {{ total_semanal_dia.total_general }}</li>
+    </ul>
+</section>
+
+{% endblock %}

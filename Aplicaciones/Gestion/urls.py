@@ -1,10 +1,13 @@
 from django.urls import path
 from . import views
 from django.contrib.auth import views as auth_views
+from Aplicaciones.Campo.views import registro_diario
 
 urlpatterns = [
     #HOME
     path('',views.home, name='home'),
+    path('Conteo/diario.html', registro_diario, name='ingresoDiario'),
+
 
     #LOGIN ADMINISTRADOR
     path('login/', views.login, name='login'),
@@ -48,6 +51,13 @@ urlpatterns = [
     path('editarBloque/<id>/', views.editarBloque, name='editarBloque'),
     path('procesarActualizacionBloque/', views.procesarActualizacionBloque, name='procesarActualizacionBloque'),
 
-    path('Conteos/diario.html', views.diario, name='diario'),
+    #Variedades
+    path('Variedades/listado.html/', views.listadoVariedades, name='listadoVariedades'),
+    path('Variedades/gestion.html/', views.gestionVariedades, name='gestionVariedades'),
+    path('guardarVariedad/', views.guardarVariedad, name='guardarVariedad'),
+    path('procesarActualizacionVariedad/', views.procesarActualizacionVariedad, name='procesarActualizacionVariedad'),
+    path('eliminarVariedad/<id>/', views.eliminarVariedad, name='eliminarVariedad'),
+    path('editarVariedad/<id>/', views.editarVariedad, name='editarVariedad'),
+    
 
 ]

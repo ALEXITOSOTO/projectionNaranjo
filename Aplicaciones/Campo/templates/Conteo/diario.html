@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro Diario de Conteo</title>
+    <style>
+        /* Tu estilo aquí */
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="form-container">
+            <h1>Registro Diario de Conteo</h1>
+            <form method="POST" action="{% url 'ingresoDiario' %}">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="fecha">Fecha:</label>
+                    <input type="date" name="fecha" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="dia">Día:</label>
+                    <select name="dia" required>
+                        <option value="">Seleccione un día</option>
+                        <option value="Lunes">Lunes</option>
+                        <option value="Martes">Martes</option>
+                        <option value="Miércoles">Miércoles</option>
+                        <option value="Jueves">Jueves</option>
+                        <option value="Viernes">Viernes</option>
+                        <option value="Sábado">Sábado</option>
+                        <option value="Domingo">Domingo</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="conteo_del_dia">Conteo del Día:</label>
+                    <input type="number" name="conteo_del_dia" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="area">Área:</label>
+                    <select name="area" required>
+                        {% for area in areas %}
+                            <option value="{{ area.id }}">{{ area.nombre }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="responsable">Responsable:</label>
+                    <select name="responsable" required>
+                        {% for responsable in responsables %}
+                            <option value="{{ responsable.id }}">{{ responsable.nombre }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="bloque">Bloque:</label>
+                    <select name="bloque" required>
+                        {% for bloque in bloques %}
+                            <option value="{{ bloque.id }}">{{ bloque.nombre }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="variedad">Variedad:</label>
+                    <select name="variedad" required>
+                        {% for variedad in variedades %}
+                            <option value="{{ variedad.id }}">{{ variedad.nombre }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <button type="submit">Guardar</button>
+            </form>
+        </div>
+    </div>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #ffffff;
+            color: #333333;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 80%;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .form-container {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #ff6600;
+            margin-bottom: 20px;
+        }
+        label {
+            font-weight: bold;
+            color: #333333;
+            display: block;
+            margin-top: 10px;
+        }
+        input[type="date"],
+        input[type="number"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #cccccc;
+            border-radius: 4px;
+        }
+        button {
+            background-color: #ff6600;
+            color: #ffffff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+        button:hover {
+            background-color: #e65c00;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group select {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            background-color: #ffffff;
+            background-image: linear-gradient(45deg, transparent 50%, #333333 50%), linear-gradient(135deg, #333333 50%, transparent 50%);
+            background-position: calc(100% - 20px) calc(100% - 20px), calc(100% - 15px) calc(100% - 15px);
+            background-size: 5px 5px, 5px 5px;
+            background-repeat: no-repeat;
+        }
+        .form-group select:focus {
+            outline: none;
+        }
+    </style>
+</body>
+</html>

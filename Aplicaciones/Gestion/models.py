@@ -39,3 +39,11 @@ class Bloques(models.Model):
     def __str__(self):
         fila='{0} - {1} - {2}'
         return fila.format(self.id,self.codigo,self.descripcion)
+    
+class Variedades(models.Model):
+    id = models.AutoField(primary_key=True)
+    nombre = models.CharField(max_length=250, default='No ingresado')
+    caracteristicas = models.TextField(default='Descripción no proporcionada')
+
+    def __str__(self):
+        return self.nombre
