@@ -21,7 +21,10 @@
                                     <tr>
                                         <th>Id</th>
                                         <th>Nombre</th>
+                                        <th>Ciclo fenologico</th>
+                                        <th>Dias ciclo</th>
                                         <th>Características</th>
+                                        <th>Estado</th>
                                         <th>Acciones</th>
                                     </tr>
                                 </thead>
@@ -30,12 +33,15 @@
                                     <tr>
                                         <td>{{ variedad.id }}</td>
                                         <td>{{ variedad.nombre }}</td>
+                                        <td>{{ variedad.ciclo_fenologico }}</td>
+                                        <td>{{ variedad.dias_ciclo }}</td>
                                         <td>{{ variedad.caracteristicas }}</td>
+                                        <td>{{ variedad.estado }}</td>
                                         <td class="text-center">
                                             <a href="{% url 'editarVariedad' variedad.id %}" class="btn btn-outline-warning btn-circle" title="Editar Variedad">
                                                 <i class="fas fa-pencil"></i>
                                             </a>
-                                            <a href="#" onclick="return confirmDelete('{{ variedad.id }}');" class="btn btn-outline-danger btn-circle">
+                                            <a href="{% url 'eliminarVariedad' variedad.id %}" onclick="return confirmDelete('{{ variedad.id }}');" class="btn btn-outline-danger btn-circle">
                                                 <i class="fas fa-trash"></i>
                                             </a>              
                                         </td>
@@ -62,7 +68,7 @@ function confirmDelete(variedadId) {
             cancelButtonText: "Cancelar"
         }).then((result) => {
             if (result.isConfirmed) {
-                window.location.href = "{% url 'eliminarVariedad' 'id_placeholder' %}".replace('id_placeholder', bloqueId);
+                window.location.href = "{% url 'eliminarVariedad' 'id_placeholder' %}".replace('id_placeholder', variedadId);
             }
         });
         return false;

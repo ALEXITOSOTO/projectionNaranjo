@@ -4,7 +4,7 @@
 <div class="container mt-4">
     <div class="row">
         <!-- Contenido principal -->
-        <div class="col-md-9">
+        <div class="col-md-12">
             <h1 class="text-center">Gestión de Variedades</h1>
             <div class="row mb-3">
                 <div class="col-md-12 text-end">
@@ -25,7 +25,7 @@
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            <form action="#" id="frm_nueva_variedad">
+                            <form action="{% url 'guardarVariedad' %}" method="post" id="frm_nueva_variedad">
                                 {% csrf_token %}
                                 <div class="mb-3">
                                     <label for="nombre"><b>Nombre:</b></label>
@@ -34,6 +34,25 @@
                                 <div class="mb-3">
                                     <label for="caracteristicas"><b>Características:</b></label>
                                     <textarea id="caracteristicas" name="caracteristicas" class="form-control" placeholder="Ingresar características de la variedad"></textarea>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="ciclo_fenologico"><b>Ciclo Fenológico:</b></label>
+                                    <select class="form-control" name="ciclo_fenologico" id="ciclo_fenologico">
+                                        <option value="Corto">Corto</option>
+                                        <option value="Medio">Medio</option>
+                                        <option value="Largo">Largo</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="dias_ciclo"><b>Días del ciclo:</b></label>
+                                    <input type="text" id="dias_ciclo" name="dias_ciclo" class="form-control" placeholder="Ingresar días del ciclo">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="estado"><b>Estado</b></label>
+                                    <select class="form-control" name="estado" id="estado">
+                                        <option value="Activo">Activo</option>
+                                        <option value="Inactivo">Inactivo</option>
+                                    </select>
                                 </div>
                                 <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Guardar</button>
                                 <button type="button" class="btn btn-danger" data-bs-dismiss="modal"><i class="fas fa-times"></i> Cancelar</button>
@@ -46,76 +65,76 @@
     </div>
 </div>
 <script>
+$(document).ready(function() {
     // Inicializa la validación del formulario con jQuery Validate
-$("#frm_nueva_variedad").validate({
-    rules: {
-        nombre: {
-            required: true
+    $("#frm_nueva_variedad").validate({
+        rules: {
+            nombre: {
+                required: true
+            },
+            caracteristicas: {
+                required: true
+            }
         },
-        caracteristicas: {
-            required: true
-        }
-    },
-    messages: {
-        nombre: {
-            required: "Ingrese nombre de la variedad",
+        messages: {
+            nombre: {
+                required: "Ingrese nombre de la variedad",
+            },
+            caracteristicas: {
+                required: "Ingrese características de la variedad"
+            }
         },
-        caracteristicas: {
-            required: "Ingrese características de la variedad"
-        }
-    },
-    submitHandler: function(formulario) {
-        const formData = new FormData(formulario);
-        
-        $.ajax({
-            url: "{% url 'guardarVariedad' %}", // Cambia esto al nombre de la vista en Django que maneja la solicitud POST
-            type: "POST",
-            data: formData,
-            processData: false,
-            contentType: false,
-            success: function(response) {
-                if (response.estado) {
-                    Swal.fire({
-                        title: "Confirmación",
-                        text: response.mensaje,
-                        icon: 'success'
-                    }).then(() => {
-                        location.reload();
-                    });
-                    
-                    $('#exampleModal').modal('hide');
-                    formulario.reset();
-                    cargarVariedades();
-                } else {
+        submitHandler: function(formulario) {
+            const formData = new FormData(formulario);
+            
+            $.ajax({
+                url: "{% url 'guardarVariedad' %}", // Cambia esto al nombre de la vista en Django que maneja la solicitud POST
+                type: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function(response) {
+                    if (response.estado) {
+                        Swal.fire({
+                            title: "Confirmación",
+                            text: response.mensaje,
+                            icon: 'success'
+                        }).then(() => {
+                            location.reload();
+                        });
+                        
+                        $('#exampleModal').modal('hide');
+                        formulario.reset();
+                        cargarVariedades();
+                    } else {
+                        Swal.fire({
+                            title: "Error",
+                            text: response.mensaje,
+                            icon: 'error'
+                        });
+                    }
+                },
+                error: function(xhr, status, error) {
                     Swal.fire({
                         title: "Error",
-                        text: response.mensaje,
+                        text: "Hubo un error al guardar la variedad",
                         icon: 'error'
                     });
                 }
-            },
-            error: function(xhr, status, error) {
-                Swal.fire({
-                    title: "Error",
-                    text: "Hubo un error al guardar la variedad",
-                    icon: 'error'
-                });
+            });
+        }
+    });
+
+    function cargarVariedades() {
+        $("#contenedor-variedades").load('{% url "listadoVariedades" %}', function(response, status, xhr) {
+            if (status === "error") {
+                console.error("Error al cargar variedades: " + xhr.status + " " + xhr.statusText);
+            } else {
+                console.log("Variedades cargadas correctamente.");
             }
         });
     }
-});
 
-function cargarVariedades() {
-    $("#contenedor-variedades").load('{% url "listadoVariedades" %}', function(response, status, xhr) {
-        if (status === "error") {
-            console.error("Error al cargar variedades: " + xhr.status + " " + xhr.statusText);
-        } else {
-            console.log("Variedades cargadas correctamente.");
-        }
-    });
-}
-
-$(document).ready(function() {
     cargarVariedades();
 });
 </script>

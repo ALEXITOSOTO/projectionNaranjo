@@ -1,7 +1,7 @@
 from django.http import JsonResponse
 from django.shortcuts import redirect, render
 from django.contrib import messages
-from .models import Area, Responsable, Bloques
+from .models import Area, Responsable, Bloques, Variedades
 from django.contrib.auth.decorators import login_required #Pra el login
 from django.contrib.auth import logout
 from django.contrib.auth import authenticate, login
@@ -221,10 +221,7 @@ def procesarActualizacionBloque(request):
     messages.success(request, 'Bloque actualizado exitosamente.')
     return redirect('gestionBloques')
 
-from django.shortcuts import render, redirect
-from django.http import JsonResponse
-from django.contrib import messages
-from .models import Variedades, Area
+
 
 # Listar Variedades
 def listadoVariedades(request):
@@ -233,18 +230,24 @@ def listadoVariedades(request):
 
 # Gestión de Variedades
 def gestionVariedades(request):
-    areas = Area.objects.all()
-    return render(request, 'Variedades/gestion.html', {'areas': areas})
+    variedades = Variedades.objects.all()
+    return render(request, 'Variedades/gestion.html', {'areas': variedades})
 
 # Guardar Variedad
 def guardarVariedad(request):
     nombre = request.POST["nombre"]
+    ciclo_fenologico = request.POST["ciclo_fenologico"]
+    dias_ciclo = request.POST["dias_ciclo"]
     caracteristicas = request.POST["caracteristicas"]
-    
+    estado = request.POST["estado"]
+
     nuevaVariedad = Variedades.objects.create(
-        nombre=nombre,
-        caracteristicas=caracteristicas
-    )
+            nombre=nombre,
+            ciclo_fenologico=ciclo_fenologico,
+            dias_ciclo=dias_ciclo,
+            caracteristicas=caracteristicas,
+            estado=estado
+        )
     
     return JsonResponse({
         'estado': True,
@@ -270,12 +273,14 @@ def procesarActualizacionVariedad(request):
     caracteristicas = request.POST['caracteristicas']
     ciclo_fenologico = request.POST['ciclo_fenologico']
     dias_ciclo = request.POST['dias_ciclo']
+    estado = request.POST['estado']
     
     variedadConsultada = Variedades.objects.get(id=id)
     variedadConsultada.nombre = nombre
     variedadConsultada.caracteristicas = caracteristicas
     variedadConsultada.ciclo_fenologico = ciclo_fenologico
     variedadConsultada.dias_ciclo = dias_ciclo
+    variedadConsultada.estado = estado
     variedadConsultada.save()
     
     messages.success(request, 'Variedad actualizada exitosamente.')

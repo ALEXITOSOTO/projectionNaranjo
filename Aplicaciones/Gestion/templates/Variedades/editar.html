@@ -1,6 +1,6 @@
 {% extends "plantilla.html" %} <!-- Heredar lo de plantilla.html -->
 {% block body %}
-<h1>Editar variedad</h1>
+<h1>Editar Variedad</h1>
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-12">
@@ -8,19 +8,43 @@
                 {% csrf_token %}
                 <input type="hidden" name="id" value="{{ variedadEditar.id }}">
                 
-                <label for=""><b>Nombre:</b></label>
-                <input type="text" name="nombre" class="form-control" value="{{ variedadEditar.nombre }}" id="nombre" placeholder="Ingrese el nombre de la variedad">
+                <div class="mb-3">
+                    <label for="nombre"><b>Nombre:</b></label>
+                    <input type="text" name="nombre" class="form-control" value="{{ variedadEditar.nombre }}" id="nombre" placeholder="Ingrese el nombre de la variedad">
+                </div>
                 
-                <label for=""><b>Características:</b></label>
-                <textarea name="caracteristicas" id="caracteristicas" class="form-control" rows="3" placeholder="Ingrese las características">{{ variedadEditar.caracteristicas }}</textarea>
+                <div class="mb-3">
+                    <label for="caracteristicas"><b>Características:</b></label>
+                    <textarea name="caracteristicas" id="caracteristicas" class="form-control" rows="3" placeholder="Ingrese las características">{{ variedadEditar.caracteristicas }}</textarea>
+                </div>
                 
-                <br>
+                <div class="mb-3">
+                    <label for="ciclo_fenologico"><b>Ciclo Fenológico:</b></label>
+                    <select name="ciclo_fenologico" id="ciclo_fenologico" class="form-control">
+                        <option value="Corto" {% if variedadEditar.ciclo_fenologico == 'Corto' %}selected{% endif %}>Corto</option>
+                        <option value="Medio" {% if variedadEditar.ciclo_fenologico == 'Medio' %}selected{% endif %}>Medio</option>
+                        <option value="Largo" {% if variedadEditar.ciclo_fenologico == 'Largo' %}selected{% endif %}>Largo</option>
+                    </select>
+                </div>
+                
+                <div class="mb-3">
+                    <label for="dias_ciclo"><b>Días del Ciclo:</b></label>
+                    <input type="text" name="dias_ciclo" id="dias_ciclo" class="form-control" value="{{ variedadEditar.dias_ciclo }}" placeholder="Ingrese los días del ciclo">
+                </div>
+                
+                <div class="mb-3">
+                    <label for="estado"><b>Estado:</b></label>
+                    <select name="estado" id="estado" class="form-control">
+                        <option value="Activo" {% if variedadEditar.estado == 'Activo' %}selected{% endif %}>Activo</option>
+                        <option value="Inactivo" {% if variedadEditar.estado == 'Inactivo' %}selected{% endif %}>Inactivo</option>
+                    </select>
+                </div>
+                
                 <button type="submit" class="btn btn-warning">Actualizar</button>
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <a href="{% url 'gestionVariedades' %}">Cancelar</a>
+                <a href="{% url 'gestionVariedades' %}" class="btn btn-secondary">Cancelar</a>
             </form>
         </div>
     </div>
 </div>
-<br>
 {% endblock %}

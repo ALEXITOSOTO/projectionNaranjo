@@ -41,11 +41,16 @@ class Bloques(models.Model):
         return fila.format(self.id,self.codigo,self.descripcion)
     
 class Variedades(models.Model):
+    ESTADO_CHOICES = [
+        ('A', 'Activo'),
+        ('I', 'Inactivo'),
+    ]
     id = models.AutoField(primary_key=True)
     nombre = models.CharField(max_length=250, default='No ingresado')
     caracteristicas = models.TextField(default='Descripción no proporcionada')
     ciclo_fenologico = models.CharField(max_length=250, default="No ingresado")
     dias_ciclo = models.CharField(max_length=250, default=80)
+    estado = models.CharField(max_length=250, choices=ESTADO_CHOICES, default='A')
 
     def __str__(self):
         return self.nombre
