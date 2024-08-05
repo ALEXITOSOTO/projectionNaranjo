@@ -268,10 +268,14 @@ def procesarActualizacionVariedad(request):
     id = request.POST['id']
     nombre = request.POST['nombre']
     caracteristicas = request.POST['caracteristicas']
+    ciclo_fenologico = request.POST['ciclo_fenologico']
+    dias_ciclo = request.POST['dias_ciclo']
     
     variedadConsultada = Variedades.objects.get(id=id)
     variedadConsultada.nombre = nombre
     variedadConsultada.caracteristicas = caracteristicas
+    variedadConsultada.ciclo_fenologico = ciclo_fenologico
+    variedadConsultada.dias_ciclo = dias_ciclo
     variedadConsultada.save()
     
     messages.success(request, 'Variedad actualizada exitosamente.')

@@ -10,5 +10,6 @@ class ConteoDiario(models.Model):
     bloque = models.ForeignKey(Bloques, on_delete=models.CASCADE, related_name='conteos_diarios')
     variedad = models.ForeignKey(Variedades, on_delete=models.CASCADE, related_name='conteos_diarios')
 
+
     def __str__(self):
         return f'{self.fecha} - {self.dia}'

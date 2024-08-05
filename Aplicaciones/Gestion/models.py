@@ -44,6 +44,8 @@ class Variedades(models.Model):
     id = models.AutoField(primary_key=True)
     nombre = models.CharField(max_length=250, default='No ingresado')
     caracteristicas = models.TextField(default='Descripción no proporcionada')
+    ciclo_fenologico = models.CharField(max_length=250, default="No ingresado")
+    dias_ciclo = models.CharField(max_length=250, default=80)
 
     def __str__(self):
         return self.nombre
