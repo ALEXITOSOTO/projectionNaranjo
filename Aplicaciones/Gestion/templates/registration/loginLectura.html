@@ -31,20 +31,13 @@
               </div>
               <button type="submit" class="primary-btn">Ingresar</button>
             </form>
-            <div class="links">
-              <a href="#">Reestablecer contraseña</a>
-            </div>
-            <div class="or">
-              <hr class="bar" />
-              <span>O</span>
-              <hr class="bar" />
-            </div>
+            
             <div class="dropdown">
                 <button class="secondary-btn dropdown-toggle">Cambiar de cuenta</button>
                 <div class="dropdown-menu">
-                  <a href="{% url 'login'%}">Cuenta 1</a>
-                  <a href="{% url 'loginAgente'%}">Cuenta 2</a>
-                  <a href="{% url 'loginLectura'%}">Cuenta 3</a>
+                  <a href="{% url 'login'%}">Administrador</a>
+                  <a href="{% url 'loginAgente'%}">Agente de campo</a>
+                  <a href="{% url 'loginLectura'%}">Visualizador</a>
                 </div>
               </div>
             
