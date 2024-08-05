@@ -44,31 +44,44 @@
                         <li class="sidebar-title">Menu</li>
 
                         <li class="sidebar-item active ">
-                            <a href="{% url 'inicio' %}" class='sidebar-link'>
+                            <a href="{% url 'inicioC' %}" class='sidebar-link'>
                                 <i class="fa-solid fa-house"></i>
                                 <span>Inicio</span>
                             </a>
                         </li>
-
+                    </ul>
+                </div>
+                <div class="sidebar-menu">
+                    <ul class="menu">
                         <li class="sidebar-item  has-sub">
-                            <a href="#" class='sidebar-link'>
-                                <i class="bi bi-stack"></i>
-                                <span>Gestión</span>
+                            <a href="" class='sidebar-link'>
+                                <i class="fa-solid fa-calculator"></i>
+                                <span>Conteo</span>
                             </a>
                             <ul class="submenu ">
                                 <li class="submenu-item ">
-                                    <a href="{% url 'gestionAreas' %}">Areas</a>
+                                    <a href="{% url 'mostrar_conteos' %}">Diario</a>
                                 </li>
                                 <li class="submenu-item ">
-                                    <a href="{% url 'gestionResponsables' %}">Responsables</a>
+                                    <a href="">Mensual</a>
                                 </li>
                                 <li class="submenu-item ">
-                                    <a href="{%url 'gestionBloques' %}">Bloques</a>
-                                </li>
-                                <li class="submenu-item ">
-                                    <a href="{%url 'gestionVariedades' %}">Variedades</a>
+                                    <a href="">Semestral</a>
                                 </li>
                             </ul>
+                        </li>
+                    </ul>
+                </div>
+                <div class="sidebar-menu">
+                    <ul class="menu">
+                        <li class="sidebar-item active ">
+                            <a href="" class='sidebar-link'>
+                                <i class="fa-solid fa-house"></i>
+                                <span>Estimación</span>
+                            </a>
+                        </li>
+                        <li class="submenu-item ">
+                            <a href="{% url 'ingresoDiario' %}">Ingresar datos en campo</a>
                         </li>
                     </ul>
                 </div>

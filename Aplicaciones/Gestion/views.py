@@ -45,6 +45,10 @@ def loginLectura(request):
     return render(request, "registration/loginLectura.html")
 
 
+@login_required
+def inicioC(request):
+    return render(request,'inicioC.html')
+
 #AREAS
 @login_required
 def inicio(request):

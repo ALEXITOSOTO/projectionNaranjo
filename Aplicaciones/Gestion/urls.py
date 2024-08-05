@@ -22,6 +22,7 @@ urlpatterns = [
 
 
     path('inicio/', views.inicio, name='inicio'),
+    path('inicioC/', views.inicioC, name='inicioC'),
 
 
     #AREAS
