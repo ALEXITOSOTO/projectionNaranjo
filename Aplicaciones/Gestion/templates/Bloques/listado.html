@@ -22,7 +22,7 @@
                 title="Editar Bloque">
                     <i class="fas fa-pencil-alt"></i>
                 </a>
-                <a href="#" onclick="return confirmDelete('{{ bloque.id }}');" class="btn btn-outline-danger btn-circle">
+                <a href="{% url 'eliminarBloque' bloque.id %}" onclick="return confirmDelete('{{ bloque.id }}');" class="btn btn-outline-danger btn-circle">
                     <i class="fas fa-trash-alt"></i>
                 </a>              
             </td>

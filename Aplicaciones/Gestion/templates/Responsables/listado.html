@@ -1,51 +1,84 @@
-{% load static %}
-<script src="{% static 'js/Responsables/listado.js' %}"></script>
-<div class="container">
-    <table class="table table-bordered">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Nombre</th>
-                <th>Apellido</th>
-                <th>Email</th>
-                <th>Teléfono</th>
-                <th>Cédula</th>
-                <th>Área</th>
-                <th>Estado</th>
-                <th>Acciones</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for responsable in responsables %}
-            <tr>
-                <td>{{ responsable.id }}</td>
-                <td>{{ responsable.nombre }}</td>
-                <td>{{ responsable.apellido }}</td>
-                <td>{{ responsable.email }}</td>
-                <td>{{ responsable.telefono }}</td>
-                <td>{{ responsable.cedula }}</td>
-                <td>{{ responsable.area.nombre }}</td>
-                <td>
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Nombre</th>
+            <th>Apellido</th>
+            <th>Email</th>
+            <th>Teléfono</th>
+            <th>Cédula</th>
+            <th>Área</th>
+            <th>Estado</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for responsable in responsables %}
+        <tr>
+            <td>{{ responsable.id }}</td>
+            <td>{{ responsable.nombre }}</td>
+            <td>{{ responsable.apellido }}</td>
+            <td>{{ responsable.email }}</td>
+            <td>{{ responsable.telefono }}</td>
+            <td>{{ responsable.cedula }}</td>
+            <td>{{ responsable.area.nombre }}</td>
+            <td>
+                <span class="{% if responsable.estado == 'A' %}text-green{% else %}text-red{% endif %}">
                     {% if responsable.estado == 'A' %}
                         Activo
                     {% else %}
                         Inactivo
                     {% endif %}
-                </td>
-                <td class="text-center">
-                    <a href="{% url 'editarResponsable' responsable.id %}" class="btn btn-outline-warning btn-circle"
-                        title="Editar Responsable">
-                        <i class="fas fa-pencil"></i>
-                    </a>
-                    <a href="#" onclick="return confirmDelete('{{ responsable.id }}');" class="btn btn-outline-danger btn-circle">
-                        <i class="fas fa-trash"></i>
-                    </a>              
-                </td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-</div>
+                </span>
+            </td>
+            <td class="text-center">
+                <a href="{% url 'editarResponsable' responsable.id %}" class="btn btn-outline-warning btn-circle"
+                    title="Editar Responsable">
+                    <i class="fas fa-pencil"></i>
+                </a>
+                <a href="{% url 'eliminarResponsable' responsable.id %}" onclick="return confirmDelete('{{ responsable.id }}');" class="btn btn-outline-danger btn-circle">
+                    <i class="fas fa-trash"></i>
+                </a>              
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
 <script>
-    const eliminarResponsableUrl = "{% url 'eliminarResponsable' 'id_placeholder' %}";
+    function confirmDelete(bloqueId) {
+        Swal.fire({
+            title: "¿Seguro de eliminar?",
+            text: "¡No se podrá revertir la acción!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Confirmar",
+            cancelButtonText: "Cancelar"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = "{% url 'eliminarResponsable' 'id_placeholder' %}".replace('id_placeholder', bloqueId);
+            }
+        });
+        return false;
+    }
 </script>
+<style>
+.text-green {
+    color: #ffffff; 
+    background-color: #28a745; 
+    padding: 0.2em 0.8em; 
+    border-radius: 0.2em; 
+    font-weight: bold;
+}
+
+.text-red {
+    color: #ffffff; /* Texto blanco */
+    background-color: #dc3545; /* Fondo rojo */
+    padding: 0.2em 0.5em; /* Espaciado interno */
+    border-radius: 0.2em; /* Bordes redondeados */
+    font-weight: bold; /* Texto en negrita */
+}
+
+</style>

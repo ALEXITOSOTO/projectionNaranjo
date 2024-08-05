@@ -1,60 +1,63 @@
 {% extends "plantilla.html" %}
 {% load static %}
 {% block body %}
-<div class="container">
-    <h1 class="text-center">Gestión de Responsables</h1>
+<div class="container mt-4">
     <div class="row">
-        <div class="col-md-12 text-end">
-            <button class="btn btn-success" onclick="cargarResponsables();"><i class="fas fa-refresh"></i> Actualizar</button>
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                <i class="fas fa-pencil fa-lg"></i> <b>Guardar Responsable</b>
-            </button>
+        <!-- Contenido principal -->
+        <div class="col-md-9">
+            <h1 class="text-center">Gestión de Responsables</h1>
+            <div class="row mb-3">
+                <div class="col-md-12 text-end">
+                    <button class="btn btn-success" onclick="cargarResponsables();"><i class="fas fa-refresh"></i> Actualizar</button>
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                            <i class="fas fa-pencil fa-lg"></i> <b>Guardar Responsable</b>
+                    </button>
+                </div>
+            </div>
+            <div class="col-md-12" id="contenedor-responsables"></div>
+            <!-- Modal -->
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Nuevo Responsable</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="#" id="frm_nuevo_responsable">
+                            {% csrf_token %}
+                            <label for="nombre"><b>Nombre:</b></label>
+                            <input type="text" id="nombre" name="nombre" class="form-control" placeholder="Ingresar nombre del responsable" required><br>
+                            <label for="apellido"><b>Apellido:</b></label>
+                            <input type="text" id="apellido" name="apellido" class="form-control" placeholder="Ingresar apellido del responsable" required><br>
+                            <label for="email"><b>Email:</b></label>
+                            <input type="email" id="email" name="email" class="form-control" placeholder="Ingresar email del responsable" required><br>
+                            <label for="telefono"><b>Teléfono:</b></label>
+                            <input type="text" id="telefono" name="telefono" class="form-control" placeholder="Ingresar teléfono del responsable" required><br>
+                            <label for="cedula"><b>Cédula:</b></label>
+                            <input type="text" id="cedula" name="cedula" class="form-control" placeholder="Ingresar cédula del responsable" required><br>
+                            <label for="area"><b>Área:</b></label>
+                            <select id="area" name="area" class="form-control" required>
+                                {% for area in areas %}
+                                <option value="{{ area.id }}">{{ area.nombre }}</option>
+                                {% endfor %}
+                            </select><br>
+                            <label for="estado"><b>Estado:</b></label>
+                            <select id="estado" name="estado" class="form-control" required>
+                                <option value="A">Activo</option>
+                                <option value="I">Inactivo</option>
+                            </select><br>
+                            <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Guardar</button>
+                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal"><i class="fas fa-times"></i> Cancelar</button>
+                        </form>
+                    </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
-<br>
-<div class="col-md-12" id="contenedor-responsables"></div>
 
-<!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Nuevo Responsable</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form action="#" id="frm_nuevo_responsable">
-                    {% csrf_token %}
-                    <label for="nombre"><b>Nombre:</b></label>
-                    <input type="text" id="nombre" name="nombre" class="form-control" placeholder="Ingresar nombre del responsable" required><br>
-                    <label for="apellido"><b>Apellido:</b></label>
-                    <input type="text" id="apellido" name="apellido" class="form-control" placeholder="Ingresar apellido del responsable" required><br>
-                    <label for="email"><b>Email:</b></label>
-                    <input type="email" id="email" name="email" class="form-control" placeholder="Ingresar email del responsable" required><br>
-                    <label for="telefono"><b>Teléfono:</b></label>
-                    <input type="text" id="telefono" name="telefono" class="form-control" placeholder="Ingresar teléfono del responsable" required><br>
-                    <label for="cedula"><b>Cédula:</b></label>
-                    <input type="text" id="cedula" name="cedula" class="form-control" placeholder="Ingresar cédula del responsable" required><br>
-                    <label for="area"><b>Área:</b></label>
-                    <select id="area" name="area" class="form-control" required>
-                        {% for area in areas %}
-                        <option value="{{ area.id }}">{{ area.nombre }}</option>
-                        {% endfor %}
-                    </select><br>
-                    <label for="estado"><b>Estado:</b></label>
-                    <select id="estado" name="estado" class="form-control" required>
-                        <option value="A">Activo</option>
-                        <option value="I">Inactivo</option>
-                    </select><br>
-                    <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Guardar</button>
-                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal"><i class="fas fa-times"></i> Cancelar</button>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-<br><br><br>
 <script>
     // Inicializa la validación del formulario con jQuery Validate
     $("#frm_nuevo_responsable").validate({
