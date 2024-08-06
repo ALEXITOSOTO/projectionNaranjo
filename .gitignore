@@ -1,5 +1,4 @@
 bddNara.db
-<<<<<<< HEAD
 db.sqlite3
 venv/
 __pycache__
@@ -7,4 +6,4 @@ __pycache__
 =======
 venv/
 __pycache__
->>>>>>> 41a2979d4fd86cc25bfeb4577d499b471218beba
+
