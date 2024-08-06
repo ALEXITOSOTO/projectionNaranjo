@@ -24,10 +24,15 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('Aplicaciones.Gestion.urls')),
     path('', include('Aplicaciones.Campo.urls')),
+<<<<<<< HEAD
     path('accounts/', include('django.contrib.auth.urls')) #Para el login
+=======
+    path('accounts/', include('django.contrib.auth.urls')) 
+
+>>>>>>> 41a2979d4fd86cc25bfeb4577d499b471218beba
 ]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 if settings.DEBUG:
-    urlpatterns+=static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
+    urlpatterns+=static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 

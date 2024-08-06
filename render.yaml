@@ -1,0 +1,26 @@
+databases:
+  - name: servidorNaranjo
+    plan: free
+    databaseName: dbnaranjo
+    user: leandro
+
+services:
+  - type: web
+    plan: free
+    name: projectionNaranjo
+    runtime: python
+    buildCommand: "./build.sh"
+    startCommand: "gunicorn projectionNaranjo.asgi:application -k uvicorn.workers.UvicornWorker"
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: servidorNaranjo
+          property: externalConnectionString
+      - key: SECRET_KEY
+        generateValue: true
+      - key: ALLOWED_HOSTS
+        value: projectionnaranjo-e01g.onrender.com
+
+
+
+# set DATABASE_URL=postgresql://leandro:Qzn1XDLeDQSwDVsHtbbCjaN14qQZwm0d@dpg-cqosk2g8fa8c73c1jvfg-a.oregon-postgres.render.com/dbnaranjo_tags
