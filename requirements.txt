@@ -6,7 +6,7 @@ blivet==3.10.0
 #blivet-gui==2.5.0
 boto3==1.34.146
 botocore==1.34.146
-Brlapi==0.8.5
+#Brlapi==0.8.5
 Brotli==1.1.0
 cffi==1.16.0
 chardet==5.2.0
