@@ -1,16 +1,14 @@
-from django.http import JsonResponse
-from django.shortcuts import redirect, render
+from django.shortcuts import render, redirect
 from django.contrib import messages
-from .models import Area, Responsable, Bloques, Variedades
-from django.contrib.auth.decorators import login_required #Pra el login
-from django.contrib.auth import logout
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login as auth_login, logout
+from django.contrib.auth.decorators import login_required
+from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
-from django.db.models import Sum, Q
-from datetime import date, timedelta
+from .models import Area, Responsable, Bloques, Variedades
 from Aplicaciones.Campo.models import ConteoDiario
 from django.db.models import Sum, Case, When, IntegerField
-# Create your views here.
+from datetime import date, timedelta
+
 
 def home(request):
     return render(request, "home.html")
@@ -24,44 +22,57 @@ def conteo_diario(request):
     }
     return render(request, "Conteo/diario.html", context)
 
-
-#LOGIN ADMINISTRADOR
-@csrf_exempt  
-def login(request):
+# LOGIN ADMINISTRADOR
+def login_admin(request):
     if request.method == 'POST':
         username = request.POST.get('username')
         password = request.POST.get('password')
         user = authenticate(request, username=username, password=password)
-        if user is not None:
-            login(request, user)
-            return JsonResponse({'success': True, 'message': 'Login successful'})
+        if user is not None and user.groups.filter(name='Administrador').exists():
+            auth_login(request, user)
+            return redirect('inicio')  # Cambia 'inicio' por la URL a la que deseas redirigir
         else:
-            return JsonResponse({'success': False, 'message': 'Invalid credentials'})
-    return JsonResponse({'success': False, 'message': 'Invalid request method'})
+            return render(request, 'registration/login.html', {'error': 'Credenciales incorrectas o no autorizado'})
+    return render(request, 'registration/login.html')
 
-def custom_logout(request):
-    logout(request)
-    return redirect('login')
+# LOGIN AGENTE DE CAMPO
+def login_agente(request):
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        user = authenticate(request, username=username, password=password)
+        if user is not None and user.groups.filter(name='Agente de Campo').exists():
+            auth_login(request, user)
+            return redirect('inicioC')  # Asegúrate de definir esta vista en tus urls.py
+        else:
+            return render(request, 'registration/loginAgente.html', {'error': 'Credenciales incorrectas o no autorizado'})
+    return render(request, 'registration/loginAgente.html')
 
+# LOGIN USUARIO DE LECTURA
+def login_lectura(request):
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        user = authenticate(request, username=username, password=password)
+        if user is not None and user.groups.filter(name='Visualizador').exists():
+            auth_login(request, user)
+            return redirect('inicio')  # Asegúrate de definir esta vista en tus urls.py
+        else:
+            return render(request, 'registration/loginLectura.html', {'error': 'Credenciales incorrectas o no autorizado'})
+    return render(request, 'registration/loginLectura.html')
 
-#LOGIN AGENTE DE CAMPO
-def loginAgente(request):
-    return render(request, "registration/loginAgente.html")
-
-#LOGIN USUARIO DE LECCTURA
-def loginLectura(request):
-    return render(request, "registration/loginLectura.html")
 
 
 @login_required
 def inicioC(request):
-    return render(request,'inicioC.html')
+    return render(request, 'inicioC.html')
 
-#AREAS
 @login_required
 def inicio(request):
-    return render(request,'inicio.html')
-                
+    return render(request, 'inicio.html')
+
+
+#AREAS
 def gestionAreas(request):
     return render(request,'Areas/gestion.html')
 

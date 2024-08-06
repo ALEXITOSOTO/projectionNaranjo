@@ -4,27 +4,24 @@ from django.contrib.auth import views as auth_views
 from Aplicaciones.Campo.views import conteo_diario_view,conteo_diario
 
 urlpatterns = [
-    #HOME
-    path('',views.home, name='home'),
-    path('Ingreso/diario.html', conteo_diario_view, name='conteo_diario_view'),
-    path('Conteo/diario.html', conteo_diario, name='conteo_diario'),
+    # HOME
+    path('', views.home, name='home'),
+    path('Ingreso/diario.html', views.conteo_diario, name='conteo_diario'),
+
+    # LOGIN ADMINISTRADOR
+    path('login/', views.login_admin, name='login_admin'),
+
+    # LOGIN AGENTE
+    path('loginAgente/', views.login_agente, name='loginAgente'),
+
+    # LOGIN LECTURA
+    path('loginLectura/', views.login_lectura, name='loginLectura'),
 
 
-    #LOGIN ADMINISTRADOR
-    path('login/', views.login, name='login'),
-    path('logout/', views.custom_logout, name='logout'),
 
-    #LOGIN AGENTE
-    path('loginAgente/', views.loginAgente, name='loginAgente'),
-
-
-    #LOGIN AGENTE
-    path('loginLectura/', views.loginLectura, name='loginLectura'),
-
-
+    # PÁGINAS
     path('inicio/', views.inicio, name='inicio'),
     path('inicioC/', views.inicioC, name='inicioC'),
-
 
     #AREAS
     path('Areas/listado.html/', views.listadoAreas, name='listadoAreas'),

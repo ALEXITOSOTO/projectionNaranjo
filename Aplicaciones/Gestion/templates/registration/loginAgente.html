@@ -20,23 +20,25 @@
               <img src="{% static 'plantilla/BLK/assets/img/logoLoginAgente.png' %}" alt="Sluralpright" style="width: 100%; height: auto;" />
             </div>
             <form id="loginForm" method="post">
+              {% csrf_token %}
               <div>
-                {% csrf_token %}
                 <label for="username">Usuario:</label>
                 <input class="text-input" type="text" id="username" name="username" required/>
               </div>
+              
               <div>
                 <label for="password">Contraseña:</label>
                 <input class="text-input" type="password" id="password" name="password" required>
               </div>
-              <a href="{% url 'inicioC' %}" class="primary-btn">Ingresar</a>
-
+              
+              <button type="submit" class="primary-btn">Ingresar</button>
             </form>
+            
             
             <div class="dropdown">
                 <button class="secondary-btn dropdown-toggle">Cambiar de cuenta</button>
                 <div class="dropdown-menu">
-                  <a href="{% url 'login'%}">Administrador</a>
+
                   <a href="{% url 'loginAgente'%}">Agente de campo</a>
                   <a href="{% url 'loginLectura'%}">Visualizador</a>
                 </div>
