@@ -34,7 +34,7 @@ DEBUG = True
 
 # Para abrir
 ALLOWED_HOSTS = [os.getenv('ALLOWED_HOSTS', 'projectionnaranjo-5rwq.onrender.com').split(',')]
-
+ALLOWED_HOSTS = []
 
 LOGIN_URL = 'registration/login/'
 LOGIN_REDIRECT_URL = 'inicio'
