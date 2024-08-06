@@ -12,14 +12,12 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 
 import os
 from pathlib import Path
-<<<<<<< HEAD
+
 #IMPORTAR PAQUETE
 import dj_database_url
-=======
-import dj_database_url
 
 
->>>>>>> 41a2979d4fd86cc25bfeb4577d499b471218beba
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -34,11 +32,11 @@ SECRET_KEY = 'django-insecure-a0)(mirnz+jmn$6dj3402i2f5p_3kb6zdg2f!uqteq7%xl9_m8
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-<<<<<<< HEAD
+
 ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', '').split(',')
-=======
+
 ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', 'projectionnaranjo-e01g.onrender.com').split(',')
->>>>>>> 41a2979d4fd86cc25bfeb4577d499b471218beba
+
 LOGIN_URL = 'registration/login/'
 LOGIN_REDIRECT_URL = 'inicio'
 LOGOUT_REDIRECT_URL = 'registration/login/'
@@ -58,10 +56,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-<<<<<<< HEAD
     # ANADIR LIBRERIA WHITENOISE
-=======
->>>>>>> 41a2979d4fd86cc25bfeb4577d499b471218beba
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -95,7 +90,7 @@ WSGI_APPLICATION = 'projectionNaranjo.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
-<<<<<<< HEAD
+
 # DATABASES = {
     #'default': {
         #'ENGINE': 'django.db.backends.sqlite3',
@@ -107,7 +102,8 @@ WSGI_APPLICATION = 'projectionNaranjo.wsgi.application'
 DATABASES = {
     # 'default': dj_database_url.config(default=os.environ.get('DATABASE_URL'))
     'default': dj_database_url.config(default=os.environ.get('DATABASE_URL'))
-=======
+}
+
 #DATABASES = {
 #    'default': {
 #        'ENGINE': 'django.db.backends.sqlite3',
@@ -115,12 +111,11 @@ DATABASES = {
 #    }
 #}
 
-DATABASES = {
-    'default': dj_database_url.config(
-        default=os.environ.get('DATABASE_URL')
-    )
->>>>>>> 41a2979d4fd86cc25bfeb4577d499b471218beba
-}
+# DATABASES = {
+#     'default': dj_database_url.config(
+#         default=os.environ.get('DATABASE_URL')
+#     )
+
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
@@ -158,7 +153,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-<<<<<<< HEAD
+
 STATICFILES_DIRS = (os.path.join(BASE_DIR,'projectionNaranjo/static'),) #Aqui va a estar los archivos
 
 # VALIDACION
@@ -166,9 +161,9 @@ if not DEBUG:
     STATICFILES_ROOT = os.path.join(BASE_DIR,'staticfiles')
     STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
     
-=======
+
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'projectionNaranjo/static')]
->>>>>>> 41a2979d4fd86cc25bfeb4577d499b471218beba
+
 
 if not DEBUG:
     STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
