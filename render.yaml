@@ -2,7 +2,7 @@ databases:
   - name: servidorNaranjo
     plan: free
     databaseName: dbnaranjo
-    user: leandro
+    user: alexander
 
 services:
   - type: web
@@ -19,7 +19,7 @@ services:
       - key: SECRET_KEY
         generateValue: true
       - key: ALLOWED_HOSTS
-        value: projectionnaranjo-e01g.onrender.com
+        value: projectionnaranjo-5rwq.onrender.com
 
 
 
