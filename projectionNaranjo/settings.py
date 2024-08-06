@@ -30,10 +30,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-a0)(mirnz+jmn$6dj3402i2f5p_3kb6zdg2f!uqteq7%xl9_m8'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.getenv('DEBUG', 'False') == 'True'
+DEBUG = True
 
 
-ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', 'projectionnaranjo-5rwq.onrender.com').split(',')
+ALLOWED_HOSTS = [os.getenv('ALLOWED_HOSTS', 'projectionnaranjo-5rwq.onrender.com').split(',')]
+ALLOWED_HOSTS = []
 
 LOGIN_URL = 'registration/login/'
 LOGIN_REDIRECT_URL = 'inicio'
