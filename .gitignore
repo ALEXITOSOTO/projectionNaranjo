@@ -1,2 +1,5 @@
-__pycache__/
-*.pyc
+bddNara.db
+db.sqlite3
+venv/
+__pycache__
+
