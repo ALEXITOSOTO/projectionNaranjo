@@ -32,7 +32,7 @@ SECRET_KEY = 'django-insecure-a0)(mirnz+jmn$6dj3402i2f5p_3kb6zdg2f!uqteq7%xl9_m8
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-
+# Para abrir
 ALLOWED_HOSTS = [os.getenv('ALLOWED_HOSTS', 'projectionnaranjo-5rwq.onrender.com').split(',')]
 ALLOWED_HOSTS = []
 
