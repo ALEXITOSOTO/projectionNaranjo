@@ -1,12 +1,13 @@
 from django.urls import path
 from . import views
 from django.contrib.auth import views as auth_views
-from Aplicaciones.Campo.views import registro_diario
+from Aplicaciones.Campo.views import conteo_diario_view,conteo_diario
 
 urlpatterns = [
     #HOME
     path('',views.home, name='home'),
-    path('Conteo/diario.html', registro_diario, name='ingresoDiario'),
+    path('Ingreso/diario.html', conteo_diario_view, name='conteo_diario_view'),
+    path('Conteo/diario.html', conteo_diario, name='conteo_diario'),
 
 
     #LOGIN ADMINISTRADOR

@@ -1,20 +1,31 @@
-{% extends "plantilla.html" %} <!--Heredar lo de platilla.html-->
+{% extends "plantilla.html" %} <!-- Heredar lo de plantilla.html -->
+
 {% block body %}
+<h1>Editar Bloque</h1>
 <form method="POST" action="{% url 'procesarActualizacionBloque' %}">
     {% csrf_token %}
     <input type="hidden" name="id" value="{{ bloqueEditar.id }}">
+    
     <div class="form-group">
         <label for="codigo">Código</label>
         <input type="text" class="form-control" id="codigo" name="codigo" value="{{ bloqueEditar.codigo }}" required>
     </div>
+    
     <div class="form-group">
         <label for="nombre">Nombre</label>
         <input type="text" class="form-control" id="nombre" name="nombre" value="{{ bloqueEditar.nombre }}" required>
     </div>
+    
+    <div class="form-group">
+        <label for="numero_camas">Número de Camas</label>
+        <input type="text" class="form-control" id="numero_camas" name="numero_camas" value="{{ bloqueEditar.numero_camas }}" required>
+    </div>
+    
     <div class="form-group">
         <label for="descripcion">Descripción</label>
         <textarea class="form-control" id="descripcion" name="descripcion" rows="3" required>{{ bloqueEditar.descripcion }}</textarea>
     </div>
+    
     <div class="form-group">
         <label for="area">Área</label>
         <select class="form-control" id="area" name="area" required>
@@ -25,6 +36,17 @@
             {% endfor %}
         </select>
     </div>
+    
+    <div class="form-group">
+        <label for="estado">Estado</label>
+        <select class="form-control" id="estado" name="estado" required>
+            <option value="A" {% if bloqueEditar.estado == 'A' %}selected{% endif %}>Activo</option>
+            <option value="M" {% if bloqueEditar.estado == 'M' %}selected{% endif %}>En Mantenimiento</option>
+            <option value="I" {% if bloqueEditar.estado == 'I' %}selected{% endif %}>Inactivo</option>
+        </select>
+    </div>
+    
     <button type="submit" class="btn btn-primary">Guardar</button>
+    <a href="{% url 'gestionBloques' %}" class="btn btn-secondary">Cancelar</a>
 </form>
 {% endblock %}

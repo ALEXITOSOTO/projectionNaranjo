@@ -1,9 +1,7 @@
 {% extends "plantillaC.html" %}
 {% load static %}
-
 {% block body %}
 <script src="{% static 'js/Areas/listado.js' %}"></script>
-
 <section class="section">
     <div class="row" id="basic-table">
         <div class="col-12 col-md-12">
@@ -61,10 +59,10 @@
                                     <th>Responsable</th>
                                     <th>Variedad</th>
                                     <th>Fecha de Conteo</th>
-                                    <th>Camas Contadas</th> 2
-                                    <th>Plantas x cama contadas</th> 50 <!--Si 50 es en 2, seria 1 en 25 multiplcar 25 por  camas Camas del bloque-->
-                                    <th> RESULTADO calculo <!--Si 50 es en 2, seria 1 en 25 multiplcar 25 por  camas Camas del bloque--></th>
-                                    <th>Nacional (8%)</th> <!--restar el 8 % de RESULTADO -->
+                                    <th>Camas Contadas</th>
+                                    <th>Plantas x cama contadas</th>
+                                    <th>RESULTADO calculo</th>
+                                    <th>Nacional (8%)</th>
                                     <th>Exportable (92%)</th>
                                 </tr>
                             </thead>
@@ -73,16 +71,15 @@
                                     <tr>
                                         <td>{{ conteo.area.nombre }}</td>
                                         <td>{{ conteo.bloque.nombre }}</td>
+                                        <td>{{ conteo.bloque.numero_camas }}</td>
                                         <td>{{ conteo.responsable.nombre }}</td>
                                         <td>{{ conteo.variedad.nombre }}</td>
-                                        <td>{% if conteo.dia == "Lunes" %}{{ conteo.conteo_del_dia }}{% else %}0{% endif %}</td>
-                                        <td>{% if conteo.dia == "Martes" %}{{ conteo.conteo_del_dia }}{% else %}0{% endif %}</td>
-                                        <td>{% if conteo.dia == "Miércoles" %}{{ conteo.conteo_del_dia }}{% else %}0{% endif %}</td>
-                                        <td>{% if conteo.dia == "Jueves" %}{{ conteo.conteo_del_dia }}{% else %}0{% endif %}</td>
-                                        <td>{% if conteo.dia == "Viernes" %}{{ conteo.conteo_del_dia }}{% else %}0{% endif %}</td>
-                                        <td>{% if conteo.dia == "Sábado" %}{{ conteo.conteo_del_dia }}{% else %}0{% endif %}</td>
-                                        <td>{% if conteo.dia == "Domingo" %}{{ conteo.conteo_del_dia }}{% else %}0{% endif %}</td>
-                                        <td>{{ conteo.conteo_del_dia }}</td>
+                                        <td>{{ conteo.fecha|date:"d/m/Y" }}</td>
+                                        <td>{{ conteo.camas }}</td>
+                                        <td>{{ conteo.plantas_por_cama }}</td>
+                                        <td>{{ conteo.resultado|floatformat:2 }}</td>
+                                        <td>{{ conteo.nacional|floatformat:2 }}</td>
+                                        <td>{{ conteo.exportable|floatformat:2 }}</td>
                                     </tr>
                                 {% empty %}
                                     <tr>
@@ -96,16 +93,13 @@
             </div>
         </div>
     </div>
-    <h2>Total Semanal:</h2>
+    <h2>Total:</h2>
     <ul>
-        <li>Lunes: {{ total_semanal_dia.Lunes }}</li>
-        <li>Martes: {{ total_semanal_dia.Martes }}</li>
-        <li>Miércoles: {{ total_semanal_dia.Miércoles }}</li>
-        <li>Jueves: {{ total_semanal_dia.Jueves }}</li>
-        <li>Viernes: {{ total_semanal_dia.Viernes }}</li>
-        <li>Sábado: {{ total_semanal_dia.Sábado }}</li>
-        <li>Domingo: {{ total_semanal_dia.Domingo }}</li>
-        <li>Total General: {{ total_semanal_dia.total_general }}</li>
+        <li>Total Camas Contadas: {{ total_camas_contadas }}</li>
+        <li>Total Plantas por Cama: {{ total_plantas_por_cama }}</li>
+        <li>Total Resultado: {{ total_resultado|floatformat:2 }}</li>
+        <li>Total Nacional (8%): {{ total_nacional|floatformat:2 }}</li>
+        <li>Total Exportable (92%): {{ total_exportable|floatformat:2 }}</li>
     </ul>
 </section>
 

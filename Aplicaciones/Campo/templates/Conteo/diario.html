@@ -5,7 +5,91 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registro Diario de Conteo</title>
     <style>
-        /* Tu estilo aquí */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 80%;
+            margin: 20px auto;
+            display: flex;
+            justify-content: center;
+        }
+        .form-container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 800px;
+        }
+        h1 {
+            text-align: center;
+            color: #ff6600;
+            margin-bottom: 20px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+            display: flex;
+            flex-direction: column;
+        }
+        .form-group label {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .form-group input[type="number"] {
+            -moz-appearance: textfield;
+        }
+        .form-group input[type="number"]::-webkit-inner-spin-button,
+        .form-group input[type="number"]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+        .form-group p {
+            background-color: #fff;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            margin: 0;
+            color: #333;
+        }
+        button {
+            background-color: #ff6600;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 10px;
+            display: block;
+            width: 100%;
+        }
+        button:hover {
+            background-color: #e65c00;
+        }
+        .form-row {
+            display: flex;
+            gap: 20px;
+        }
+        .form-row .form-group {
+            flex: 1;
+        }
+        @media (max-width: 768px) {
+            .form-row {
+                flex-direction: column;
+            }
+        }
     </style>
 </head>
 <body>
@@ -14,140 +98,102 @@
             <h1>Registro Diario de Conteo</h1>
             <form method="POST" action="{% url 'ingresoDiario' %}">
                 {% csrf_token %}
-                <div class="form-group">
-                    <label for="fecha_inicio">Fecha de conteo</label>
-                    <input type="date" name="fecha_inicio" required>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="fecha_inicio">Fecha de conteo</label>
+                        <input type="date" name="fecha_inicio" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="area">Área:</label>
+                        <select name="area" required>
+                            {% for area in areas %}
+                                <option value="{{ area.id }}">{{ area.nombre }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="responsable">Responsable:</label>
+                        <select name="responsable" required>
+                            {% for responsable in responsables %}
+                                <option value="{{ responsable.id }}">{{ responsable.nombre }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="bloque">Bloque:</label>
+                        <select id="bloque" name="bloque" required>
+                            {% for bloque in bloques %}
+                                <option value="{{ bloque.id }}">{{ bloque.nombre }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="camas_en_bloque">Camas en Bloque</label>
+                        <p id="camas_x_bloque">camasEnBloque</p>
+                    </div>
+                    <div class="form-group">
+                        <label for="variedad">Variedad:</label>
+                        <select name="variedad" required>
+                            {% for variedad in variedades %}
+                                <option value="{{ variedad.id }}">{{ variedad.nombre }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="camas">Cantidad de camas contadas</label>
+                        <input type="number" id="camas" name="camas" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="plantas_por_cama">Plantas totales en camas contadas</label>
+                        <input type="number" id="plantas_por_cama" name="plantas_por_cama" required>
+                    </div>
                 </div>
                 <div class="form-group">
-                    <label for="area">Área:</label>
-                    <select name="area" required>
-                        {% for area in areas %}
-                            <option value="{{ area.id }}">{{ area.nombre }}</option>
-                        {% endfor %}
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label for="responsable">Responsable:</label>
-                    <select name="responsable" required>
-                        {% for responsable in responsables %}
-                            <option value="{{ responsable.id }}">{{ responsable.nombre }}</option>
-                        {% endfor %}
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label for="bloque">Bloque:</label>
-                    <select name="bloque" required>
-                        {% for bloque in bloques %}
-                            <option value="{{ bloque.id }}">{{ bloque.nombre }}</option>
-                        {% endfor %}
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="variedad">Variedad:</label>
-                    <select name="variedad" required>
-                        {% for variedad in variedades %}
-                            <option value="{{ variedad.id }}">{{ variedad.nombre }}</option>
-                        {% endfor %}
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label for="camas">Cantidad de camas contadas</label>
-                    <input type="number" id="camas" name="camas" required>
-                </div>
-                <div class="form-group">
-                    <label for="plantas_por_cama">Plantas totales en camas contadas</label>
-                    <input type="number" id="plantas_por_cama" name="plantas_por_cama" required>
-                </div>
-                <div class="form-group">
-                    <label for="total_plantas_bloque">Total plantas en el bloque</label>
+                    <label for="total_plantas_bloque">Total plantas a sacar en el bloque estimado</label>
                     <p id="resultado"></p>
-                </div> 
+                </div>
                 <button type="submit">Guardar</button>
             </form>
         </div>
     </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
-        function total_plantas_bloque() {
-            var total_camas = document.getElementById("camas").value;
-            var plantas_por_cama = document.getElementById("plantas_por_cama").value;
-            var resultado = total_camas * plantas_por_cama;
-            document.getElementById("resultado").innerHTML = "Resultado: " + resultado;
+        function actualizarTotalCamas() {
+            var bloqueId = document.getElementById("bloque").value;
+            
+            $.ajax({
+                url: "{% url 'obtener_camas_bloque' %}",
+                type: "GET",
+                data: { bloque_id: bloqueId },
+                success: function(response) {
+                    console.log(response);  // Depuración
+                    if (response.numero_camas !== undefined) {
+                        var totalCamas = document.getElementById("camas").value;
+                        var plantasCamasContadas = document.getElementById("plantas_por_cama").value
+                        var camasEnBloque = response.numero_camas;
+                        console.log(`Número de camas en el bloque: ${camasEnBloque}`);
+                        document.getElementById("camas_x_bloque").innerHTML = camasEnBloque;
+                        var resultado = (plantasCamasContadas / totalCamas) * camasEnBloque;
+                        document.getElementById("resultado").innerHTML = "Resultado: " + resultado;
+                    } else {
+                        document.getElementById("resultado").innerHTML = "Error: " + response.error;
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error("Error al obtener el número de camas del bloque: " + xhr.status + " " + xhr.statusText);
+                }
+            });
         }
-        document.getElementById("camas").addEventListener("input", total_plantas_bloque);
-        document.getElementById("plantas_por_cama").addEventListener("input", total_plantas_bloque);
+        
+        document.getElementById("bloque").addEventListener("change", actualizarTotalCamas);
+        document.getElementById("camas").addEventListener("input", actualizarTotalCamas);
+        document.getElementById("plantas_por_cama").addEventListener("input", actualizarTotalCamas);
     </script>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #ffffff;
-            color: #333333;
-            margin: 0;
-            padding: 0;
-        }
-        .container {
-            width: 80%;
-            margin: 0 auto;
-            padding: 20px;
-        }
-        .form-container {
-            background-color: #ffffff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-        h1 {
-            text-align: center;
-            color: #ff6600;
-            margin-bottom: 20px;
-        }
-        label {
-            font-weight: bold;
-            color: #333333;
-            display: block;
-            margin-top: 10px;
-        }
-        input[type="date"],
-        input[type="number"],
-        select,
-        textarea {
-            width: 100%;
-            padding: 10px;
-            margin-top: 5px;
-            border: 1px solid #cccccc;
-            border-radius: 4px;
-        }
-        button {
-            background-color: #ff6600;
-            color: #ffffff;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 16px;
-            margin-top: 10px;
-        }
-        button:hover {
-            background-color: #e65c00;
-        }
-        .form-group {
-            margin-bottom: 15px;
-        }
-        .form-group select {
-            -webkit-appearance: none;
-            -moz-appearance: none;
-            appearance: none;
-            background-color: #ffffff;
-            background-image: linear-gradient(45deg, transparent 50%, #333333 50%), linear-gradient(135deg, #333333 50%, transparent 50%);
-            background-position: calc(100% - 20px) calc(100% - 20px), calc(100% - 15px) calc(100% - 15px);
-            background-size: 5px 5px, 5px 5px;
-            background-repeat: no-repeat;
-        }
-        .form-group select:focus {
-            outline: none;
-        }
-    </style>
 </body>
 </html>

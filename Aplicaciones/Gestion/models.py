@@ -30,11 +30,19 @@ class Responsable(models.Model):
         return f'{self.nombre} {self.apellido} - {self.area.codigo}'
 
 class Bloques(models.Model):
+    ESTADO_CHOICES = [
+        ('A', 'Activo'),
+        ('M', 'En Mantenimiento'),
+        ('I', 'Inactivo'),
+    ]
     id=models.AutoField(primary_key=True)
     codigo=models.CharField(max_length=250, unique=True)
     nombre=models.CharField(max_length=250)
+    numero_camas = models.CharField(max_length=250, default=30)
     descripcion=models.TextField()
     area = models.ForeignKey(Area, on_delete=models.CASCADE)
+    estado = models.CharField(max_length=1, choices=ESTADO_CHOICES, default='A')
+
 
     def __str__(self):
         fila='{0} - {1} - {2}'

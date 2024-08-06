@@ -4,7 +4,7 @@
 <div class="container mt-4">
     <div class="row">
         <!-- Contenido principal -->
-        <div class="col-md-9">
+        <div class="col-md-10">
             <h1 class="text-center">Gestión de Bloques</h1>
             <div class="row mb-3">
                 <div class="col-md-12 text-end">
@@ -29,15 +29,19 @@
                                 {% csrf_token %}
                                 <div class="mb-3">
                                     <label for="codigo"><b>Código:</b></label>
-                                    <input type="text" id="codigo" name="codigo" class="form-control" placeholder="Ingresar código del bloque">
+                                    <input type="text" id="codigo" name="codigo" class="form-control" placeholder="Ingresar código del bloque" required>
                                 </div>
                                 <div class="mb-3">
                                     <label for="nombre"><b>Nombre:</b></label>
-                                    <input type="text" id="nombre" name="nombre" class="form-control" placeholder="Ingresar nombre del bloque">
+                                    <input type="text" id="nombre" name="nombre" class="form-control" placeholder="Ingresar nombre del bloque" required>
                                 </div>
                                 <div class="mb-3">
                                     <label for="descripcion"><b>Descripción:</b></label>
-                                    <input type="text" id="descripcion" name="descripcion" class="form-control" placeholder="Ingresar descripción del bloque">
+                                    <textarea id="descripcion" name="descripcion" class="form-control" placeholder="Ingresar descripción del bloque" required></textarea>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="numero_camas"><b>Número de Camas:</b></label>
+                                    <input type="text" id="numero_camas" name="numero_camas" class="form-control" placeholder="Ingresar número de camas" required>
                                 </div>
                                 <div class="mb-3">
                                     <label for="area"><b>Área:</b></label>
@@ -45,6 +49,14 @@
                                         {% for area in areas %}
                                         <option value="{{ area.id }}">{{ area.nombre }}</option>
                                         {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="estado"><b>Estado:</b></label>
+                                    <select id="estado" name="estado" class="form-control" required>
+                                        <option value="A">Activo</option>
+                                        <option value="M">En Mantenimiento</option>
+                                        <option value="I">Inactivo</option>
                                     </select>
                                 </div>
                                 <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Guardar</button>
@@ -70,7 +82,13 @@
             descripcion: {
                 required: true
             },
+            numero_camas: {
+                required: true
+            },
             area: {
+                required: true
+            },
+            estado: {
                 required: true
             }
         },
@@ -84,8 +102,14 @@
             descripcion: {
                 required: "Ingrese descripción"
             },
+            numero_camas: {
+                required: "Ingrese número de camas"
+            },
             area: {
                 required: "Seleccione un área"
+            },
+            estado: {
+                required: "Seleccione el estado"
             }
         },
         submitHandler: function(formulario) {

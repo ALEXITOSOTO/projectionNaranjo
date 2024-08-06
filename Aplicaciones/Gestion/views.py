@@ -15,6 +15,14 @@ from django.db.models import Sum, Case, When, IntegerField
 def home(request):
     return render(request, "home.html")
 
+def conteo_diario(request):
+    context = {
+        'areas': Area.objects.all(),
+        'responsables': Responsable.objects.all(),
+        'bloques': Bloques.objects.all(),
+        'variedades': Variedades.objects.all(),
+    }
+    return render(request, "Conteo/diario.html", context)
 
 
 #LOGIN ADMINISTRADOR
@@ -168,64 +176,106 @@ def procesarActualizacionResponsable(request):
     return redirect('gestionResponsables')
 
 
-#BLOQUE
+# Listado de Bloques
 def listadoBloques(request):
     bloques = Bloques.objects.all()
     return render(request, "Bloques/listado.html", {"bloques": bloques})
 
+# Gestión de Bloques
 def gestionBloques(request):
     areas = Area.objects.all()
     return render(request, 'Bloques/gestion.html', {'areas': areas})
 
+# Guardar Bloque
 def guardarBloque(request):
-    codigo = request.POST["codigo"]
-    nombre = request.POST["nombre"]
-    descripcion = request.POST["descripcion"]
-    area_id = request.POST["area"]
-    area = Area.objects.get(id=area_id)
-    
-    nuevoBloque = Bloques.objects.create(
-        codigo=codigo,
-        nombre=nombre,
-        descripcion=descripcion,
-        area=area
-    )
-    
-    return JsonResponse({
-        'estado': True,
-        'mensaje': 'Bloque registrado exitosamente.'
-    })
+    if request.method == "POST":
+        codigo = request.POST.get("codigo")
+        nombre = request.POST.get("nombre")
+        descripcion = request.POST.get("descripcion")
+        area_id = request.POST.get("area")
+        numero_camas = request.POST.get("numero_camas")
+        estado = request.POST.get("estado", 'A')  # Valor por defecto si no se proporciona
+        
+        try:
+            area = Area.objects.get(id=area_id)
+        except Area.DoesNotExist:
+            return JsonResponse({
+                'estado': False,
+                'mensaje': 'Área no encontrada.'
+            })
+        
+        nuevoBloque = Bloques.objects.create(
+            codigo=codigo,
+            nombre=nombre,
+            descripcion=descripcion,
+            area=area,
+            numero_camas=numero_camas,
+            estado=estado
+        )
+        
+        return JsonResponse({
+            'estado': True,
+            'mensaje': 'Bloque registrado exitosamente.'
+        })
+    else:
+        return JsonResponse({
+            'estado': False,
+            'mensaje': 'Método no permitido.'
+        })
 
+# Eliminar Bloque
 def eliminarBloque(request, id):
-    bloqueEliminar = Bloques.objects.get(id=id)
-    bloqueEliminar.delete()
-    messages.success(request, 'Bloque eliminado exitosamente.')
+    try:
+        bloqueEliminar = Bloques.objects.get(id=id)
+        bloqueEliminar.delete()
+        messages.success(request, 'Bloque eliminado exitosamente.')
+    except Bloques.DoesNotExist:
+        messages.error(request, 'Bloque no encontrado.')
     return redirect('gestionBloques')
 
+# Editar Bloque
 def editarBloque(request, id):
-    bloqueEditar = Bloques.objects.get(id=id)
-    areas = Area.objects.all()
-    return render(request, 'Bloques/editar.html', {'bloqueEditar': bloqueEditar, 'areas': areas})
+    try:
+        bloqueEditar = Bloques.objects.get(id=id)
+        areas = Area.objects.all()
+        return render(request, 'Bloques/editar.html', {'bloqueEditar': bloqueEditar, 'areas': areas})
+    except Bloques.DoesNotExist:
+        messages.error(request, 'Bloque no encontrado.')
+        return redirect('gestionBloques')
 
+# Procesar Actualización de Bloque
 def procesarActualizacionBloque(request):
-    id = request.POST['id']
-    codigo = request.POST['codigo']
-    nombre = request.POST['nombre']
-    descripcion = request.POST['descripcion']
-    area_id = request.POST["area"]
-    area = Area.objects.get(id=area_id)
-    
-    bloqueConsultado = Bloques.objects.get(id=id)
-    bloqueConsultado.codigo = codigo
-    bloqueConsultado.nombre = nombre
-    bloqueConsultado.descripcion = descripcion
-    bloqueConsultado.area = area
-    bloqueConsultado.save()
-    
-    messages.success(request, 'Bloque actualizado exitosamente.')
-    return redirect('gestionBloques')
-
-
+    if request.method == "POST":
+        id = request.POST.get('id')
+        codigo = request.POST.get('codigo')
+        nombre = request.POST.get('nombre')
+        descripcion = request.POST.get('descripcion')
+        area_id = request.POST.get("area")
+        numero_camas = request.POST.get("numero_camas")
+        estado = request.POST.get("estado", 'A')  # Valor por defecto si no se proporciona
+        
+        try:
+            area = Area.objects.get(id=area_id)
+            bloqueConsultado = Bloques.objects.get(id=id)
+            bloqueConsultado.codigo = codigo
+            bloqueConsultado.nombre = nombre
+            bloqueConsultado.descripcion = descripcion
+            bloqueConsultado.area = area
+            bloqueConsultado.numero_camas = numero_camas
+            bloqueConsultado.estado = estado
+            bloqueConsultado.save()
+            messages.success(request, 'Bloque actualizado exitosamente.')
+        except Area.DoesNotExist:
+            messages.error(request, 'Área no encontrada.')
+        except Bloques.DoesNotExist:
+            messages.error(request, 'Bloque no encontrado.')
+        
+        return redirect('gestionBloques')
+    else:
+        return JsonResponse({
+            'estado': False,
+            'mensaje': 'Método no permitido.'
+        })
 
 # Listar Variedades
 def listadoVariedades(request):
